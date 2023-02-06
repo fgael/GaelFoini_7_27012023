@@ -1,0 +1,118 @@
+/* Déclaration variable titre et texte */
+:root {
+	--title-font: 'Lato', sans-serif;
+	--title-weight: 700;
+	--title-font-size: 18px;
+
+	--text-font: 'Roboto', sans-serif;
+	--text-weight: 400;
+	--text-font-size: 14px;
+
+	--line-height: 22px;
+}
+
+/* Supprime le border lors du click et du hover de Bootstrap  */
+textarea:hover,
+input:hover,
+textarea:active,
+input:active,
+textarea:focus,
+input:focus,
+button:focus,
+button:active,
+button:hover,
+label:focus,
+.btn:active,
+.btn.active {
+	outline: 0px !important;
+	box-shadow: none !important;
+}
+
+/* Placeholders modification Bootstrap 5 */
+#input-ustensile,
+#input-appareils,
+#input-ingredients {
+	padding: 1.4rem 1rem;
+}
+
+#result-menu-ingredients .col-4 {
+	font-family: var(--title-font);
+	font-weight: var(--text-weight);
+	font-size: var(--title-font-size);
+	line-height: var(--line-height);
+	color: white;
+	padding: 5px 10px;
+	opacity: 1;
+}
+
+#input-ustensile::placeholder,
+#input-appareils::placeholder,
+#input-ingredients::placeholder,
+#input-ustensile,
+#input-appareils,
+#input-ingredients {
+	font-family: var(--title-font);
+	font-weight: var(--title-weight);
+	font-size: var(--title-font-size);
+	line-height: var(--line-height);
+	color: white;
+	opacity: 1;
+}
+
+/* Select */
+#container-ingredients {
+	width: auto;
+}
+
+/* Déplacer la position de resultat ingrédients de 55px */
+.z-3 {
+	top: 55px;
+}
+
+
+/* Icones des forms */
+.form-floating img,
+#container-ustensile img,
+#container-ingredients img,
+#container-appareils img {
+	cursor: pointer;
+	right: 25px;
+}
+
+/****** Card ******/
+
+/* Background */
+.card-background {
+	height: 175px;
+	background-color:#C7BEBE;
+}
+
+/* Title */
+.card-title:first-child {
+	font-family: var(--title-font);
+	font-weight: var(--title-weight);
+	font-size: var(--title-font-size);
+	line-height: var(--line-height);
+}
+
+.card-title p {
+	font-family: var(--title-font);
+	font-weight: var(--title-weight);
+	font-size: var(--title-font-size);
+	line-height: var(--line-height);
+}
+
+/* Body */
+.card-body {
+	background-color: #E7E7E7;
+}
+
+p {
+	font-family: var(--text-font);
+	font-weight: var(--text-weight);
+	font-size: var(--text-font-size);
+}
+
+span {
+	font-weight: 600;
+}

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Les petits plats</title>
+	<!-- Bootstrap CDN -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+	<link rel="stylesheet" href="css/style.css">
+	<!-- Google Font : Roboto400 - Lato400/700 -->
+	<link rel="preconnect" href="https://fonts.googleapis.com/">
+	<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Roboto:ital@0;1&display=swap">
+</head>
+
+<body>
+
+	<!-- Logo -->
+	<header class="d-flex justify-content-center my-4">
+		<img src="assets/icons/logo.svg" alt="logo">
+	</header>
+
+	<!-- Main container -->
+	<main class="container">
+
+		<!-- Input search -->
+		<div class="form-floating mb-3 position-relative">
+			<input type="text" class="form-control bg-body-secondary border-0" id="floatingInput"
+				placeholder="Rechercher une recette">
+			<label for="floatingInput" class="text-body-tertiary">Rechercher une recette</label>
+			<img src="assets/icons/search.svg" class="position-absolute top-50 translate-middle-y" alt="search">
+		</div>
+
+		<!-- Select group -->
+		<div class="d-flex text-center">
+         <!-- Ingrédients -->
+         <div class="mb-3 me-3">
+					<label for="input-ingredients" class="form-label"></label>
+					<div class="position-relative w-100">
+						 <div class="position-relative" id="container-ingredients">
+								<input type="text" class="border-0 form-control bg-primary" id="input-ingredients"
+									 placeholder="Ingrédients">
+								<img src="assets/icons/arrow-down.svg" class="position-absolute top-50 translate-middle-y"
+									 alt="Afficher la liste">
+						 </div>
+						 <div class="z-3 bg-primary w-100 p-3 text-start position-absolute d-none rounded-bottom"
+								id="result-menu-ingredients">
+								<div class="row">
+									 <div class="col-4">
+											Lait de coco
+									 </div>
+									 <div class="col-4">
+											Jus de citron
+									 </div>
+									 <div class="col-4">
+											Crème de coco
+									 </div>
+									 <div class="col-4">
+											Glaçons
+									 </div>
+									 <div class="col-4">
+											Thon Rouge
+									 </div>
+									 <div class="col-4">
+											Concombre
+									 </div>
+									 <div class="col-4">
+											Jus de citron
+									 </div>
+									 <div class="col-4">
+											Crème de coco
+									 </div>
+									 <div class="col-4">
+											Lait de coco
+									 </div>
+								</div>
+						 </div>
+					</div>
+			 </div>
+			 <!-- Appareils -->
+			 <div class="mb-3 me-3">
+					<label for="input-appareils" class="form-label"></label>
+					<div class="position-relative" id="container-appareils">
+						 <input type="text" class="form-control bg-success" id="input-appareils" placeholder="Appareils">
+						 <img src="assets/icons/arrow-down.svg" class="position-absolute top-50 translate-middle-y"
+								alt="Afficher la liste">
+					</div>
+			 </div>
+			 <!-- Ustensile -->
+			 <div class="mb-3 me-3">
+					<label for="input-ustensile" class="form-label"></label>
+					<div class="position-relative" id="container-ustensile">
+						 <input type="text" class="form-control bg-danger" id="input-ustensile" placeholder="Ustensile">
+						 <img src="assets/icons/arrow-down.svg" class="position-absolute top-50 translate-middle-y"
+								alt="Afficher la liste">
+					</div>
+			 </div>
+		</div>
+
+		<!-- Card container -->
+		<div class="d-flex justify-content-center text-center mt-4">
+			<div class="row g-4">
+				<!-- Card -->
+				<div class="col-sm col-md-6 col-lg-4">
+					<div class="card" style="width: 100%;">
+						<div class="card-background"></div>
+						<div class="card-body">
+							<div class="d-flex justify-content-between align-items-center">
+								<h5 class="card-title mb-0">Card title</h5>
+								<div class="card-title mb-0 d-flex align-items-center">
+									<img src="assets/icons/horloge.svg" alt="clock">
+									<p class="mb-0 ms-1 fw-semibold">60 min</p>
+								</div>
+							</div>
+							<div class="d-flex justify-content-between mt-3">
+								<div class="text-start">
+									<p class="mb-0"><span>Lait de coco: </span>400ml</p>
+									<p class="mb-0"><span>Jus de citron: </span>2</p>
+									<p class="mb-0"><span>Crème de coco: </span>4 cuillères</p>
+									<p class="mb-0"><span>Lait de coco: </span>20g</p>
+									<p class="mb-0"><span>Glaçons: </span>2</p>
+								</div>
+									<p class="mb-0 w-50 text-start">
+										Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod neque hic ipsam, sequi error, ullam minim
+									</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-sm col-md-6 col-lg-4">
+					<div class="card" style="width: 100%;">
+						<div class="card-background"></div>
+						<div class="card-body">
+							<div class="d-flex justify-content-between align-items-center">
+								<h5 class="card-title mb-0">Card title</h5>
+								<div class="card-title mb-0 d-flex align-items-center">
+									<img src="assets/icons/horloge.svg" alt="clock">
+									<p class="mb-0 ms-1 fw-semibold">60 min</p>
+								</div>
+							</div>
+							<div class="d-flex justify-content-between mt-3">
+								<div class="text-start">
+									<p class="mb-0"><span>Lait de coco: </span>400ml</p>
+									<p class="mb-0"><span>Jus de citron: </span>2</p>
+									<p class="mb-0"><span>Crème de coco: </span>4 cuillères</p>
+									<p class="mb-0"><span>Lait de coco: </span>20g</p>
+									<p class="mb-0"><span>Glaçons: </span>2</p>
+								</div>
+									<p class="mb-0 w-50 text-start">
+										Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod neque hic ipsam, sequi error, ullam minim
+									</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-sm col-md-6 col-lg-4">
+					<div class="card" style="width: 100%;">
+						<div class="card-background"></div>
+						<div class="card-body">
+							<div class="d-flex justify-content-between align-items-center">
+								<h5 class="card-title mb-0">Card title</h5>
+								<div class="card-title mb-0 d-flex align-items-center">
+									<img src="assets/icons/horloge.svg" alt="clock">
+									<p class="mb-0 ms-1 fw-semibold">60 min</p>
+								</div>
+							</div>
+							<div class="d-flex justify-content-between mt-3">
+								<div class="text-start">
+									<p class="mb-0"><span>Lait de coco: </span>400ml</p>
+									<p class="mb-0"><span>Jus de citron: </span>2</p>
+									<p class="mb-0"><span>Crème de coco: </span>4 cuillères</p>
+									<p class="mb-0"><span>Lait de coco: </span>20g</p>
+									<p class="mb-0"><span>Glaçons: </span>2</p>
+								</div>
+									<p class="mb-0 w-50 text-start">
+										Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod neque hic ipsam, sequi error, ullam minim
+									</p>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-sm col-md-6 col-lg-4">
+					<div class="card" style="width: 100%;">
+						<div class="card-background"></div>
+						<div class="card-body">
+							<div class="d-flex justify-content-between align-items-center">
+								<h5 class="card-title mb-0">Card title</h5>
+								<div class="card-title mb-0 d-flex align-items-center">
+									<img src="assets/icons/horloge.svg" alt="clock">
+									<p class="mb-0 ms-1 fw-semibold">60 min</p>
+								</div>
+							</div>
+							<div class="d-flex justify-content-between mt-3">
+								<div class="text-start">
+									<p class="mb-0"><span>Lait de coco: </span>400ml</p>
+									<p class="mb-0"><span>Jus de citron: </span>2</p>
+									<p class="mb-0"><span>Crème de coco: </span>4 cuillères</p>
+									<p class="mb-0"><span>Lait de coco: </span>20g</p>
+									<p class="mb-0"><span>Glaçons: </span>2</p>
+								</div>
+									<p class="mb-0 w-50 text-start">
+										Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod neque hic ipsam, sequi error, ullam minim
+									</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+	<!-- Bootstrap CDN script -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+		crossorigin="anonymous">
+	</script>
+	<script src="script.js"></script>
+</body>
+
+</html>
