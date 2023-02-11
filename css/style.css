@@ -1,14 +1,22 @@
 /* Déclaration variable titre et texte */
 :root {
 	--title-font: 'Lato', sans-serif;
-	--title-weight: 700;
+	--title-style: normal;
+	--title-weight: 400;
 	--title-font-size: 18px;
+	--title-line-height: 21.6px;
 
-	--text-font: 'Roboto', sans-serif;
+	--text-font: 'Lato', sans-serif;
 	--text-weight: 400;
-	--text-font-size: 14px;
+	--text-font-size: 12px;
+	--text-line-height: 14.4px;
 
-	--line-height: 22px;
+	--description-font: 'Roboto', sans-serif;
+	--description-weight: 400;
+	--description-font-size: 12px;
+	--description-line-height: 12px;
+
+	--bold-weight: 700;
 }
 
 /* Supprime le border lors du click et du hover de Bootstrap  */
@@ -28,6 +36,8 @@ label:focus,
 	box-shadow: none !important;
 }
 
+/***** Select *****/
+
 /* Placeholders modification Bootstrap 5 */
 #input-ustensile,
 #input-appareils,
@@ -35,33 +45,35 @@ label:focus,
 	padding: 1.4rem 1rem;
 }
 
-#result-menu-ingredients .col-4 {
-	font-family: var(--title-font);
-	font-weight: var(--text-weight);
-	font-size: var(--title-font-size);
-	line-height: var(--line-height);
-	color: white;
-	padding: 5px 10px;
-	opacity: 1;
-}
-
+/* Select */
 #input-ustensile::placeholder,
 #input-appareils::placeholder,
 #input-ingredients::placeholder,
 #input-ustensile,
 #input-appareils,
 #input-ingredients {
+	font-weight: var(--bold-weight);
 	font-family: var(--title-font);
-	font-weight: var(--title-weight);
 	font-size: var(--title-font-size);
 	line-height: var(--line-height);
 	color: white;
 	opacity: 1;
 }
 
-/* Select */
+/* Select width auto when trigger*/
 #container-ingredients {
 	width: auto;
+}
+
+/* Tag list*/
+#result-menu-ingredients .col-4 {
+	font-family: var(--title-font);
+	font-weight: var(--text-weight);
+	font-size: var(--title-font-size);
+	line-height: var(--title-line-height);
+	color: white;
+	padding: 5px 10px;
+	opacity: 1;
 }
 
 /* Déplacer la position de resultat ingrédients de 55px */
@@ -83,7 +95,7 @@ label:focus,
 
 /* Background */
 .card-background {
-	height: 175px;
+	height: 178px;
 	background-color:#C7BEBE;
 }
 
@@ -91,13 +103,14 @@ label:focus,
 .card-title:first-child {
 	font-family: var(--title-font);
 	font-weight: var(--title-weight);
+	font-style: var(--title-style);
 	font-size: var(--title-font-size);
-	line-height: var(--line-height);
+	line-height: var(--title-line-height);
 }
 
 .card-title p {
 	font-family: var(--title-font);
-	font-weight: var(--title-weight);
+	font-weight: var(--bold-weight);
 	font-size: var(--title-font-size);
 	line-height: var(--line-height);
 }
@@ -105,14 +118,27 @@ label:focus,
 /* Body */
 .card-body {
 	background-color: #E7E7E7;
+	height: 185px;
 }
 
 p {
-	font-family: var(--text-font);
-	font-weight: var(--text-weight);
-	font-size: var(--text-font-size);
+	font-family: var(--description-font);
+	font-weight: var(--description-weight);
+	font-size: var(--description-font-size);
+	line-height: var(--description-line-height);
 }
 
 span {
-	font-weight: 600;
+	font-weight: var(--bold-weight);
+	font-family: var(--text-font);
+	font-size: var(--text-font-size);
+	line-height: var(--text-line-height);
+}
+
+.description {
+	overflow: hidden;
+	display: -webkit-box;
+	-webkit-box-orient: vertical;
+	height: 120px;
+	width: 100%;
 }

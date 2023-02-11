@@ -174,7 +174,7 @@ const recipes = [
          {
               "ingredient": "Moutarde de Dijon",
               "quantity": 1,
-              "unite": "cuillères à soupe"
+              "unit": "cuillères à soupe"
          }
       ],
       "time": 45,
