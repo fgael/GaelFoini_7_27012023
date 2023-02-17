@@ -34,7 +34,7 @@
 		</div>
 
 		<!-- Select group -->
-		<div class="d-flex text-center">
+		<div class="d-flex text-center mb-4">
 			<!-- Ingrédients -->
 			<div class="mb-3 me-3">
 				<label for="input-ingredients" class="form-label"></label>
@@ -100,23 +100,18 @@
 		</div>
 
 		<!-- Card container -->
-		<div class="d-flex justify-content-center text-center mt-4">
-			<div class="row g-5" id="card-grid">
-				<!-- Card -->
-
-
-
-
-			</div>
+		<div class="row gy-4" id="card-grid">
+			<!-- Card generation in js-->
 		</div>
+
 	</main>
 	<!-- Bootstrap CDN script -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
 	</script>
-	<script src="data/recipes.js"></script>
-	<script src="factory/recipeCardFactory.js"></script>
-	<script src="script.js"></script>
+	<script src="scripts/factory/recipeCardFactory.js"></script>
+	<script src="scripts/utils/selectTrigger.js"></script>
+	<script src="scripts/script.js" type="module"></script>
 </body>
 
 </html>

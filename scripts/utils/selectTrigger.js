@@ -32,22 +32,3 @@ inputIngredient.placeholder = "Ingrédients";
 imgArrow.src = "assets/icons/arrow-down.svg";
 }
 });
-
-// La fonction displayData est responsable d'afficher les cartes de recettes sur la page
-async function displayData(recipes) {
-const recipesGrid = document.getElementById("card-grid");
-
-// Bouclez à travers la liste de recettes et générez une carte de recette pour chacune d'entre elles
-recipes.forEach((recipe) => {
-// Génération de la carte recette dans /factory/recipeCardFactory.js
-const recipeCard = recipeCardFactory(recipe);
-const recipeCardDOM = recipeCard.createRecipeCard();
-recipesGrid.appendChild(recipeCardDOM);
-});
-}
-
-function init() {
-  displayData(recipes);
-}
-
-init();
