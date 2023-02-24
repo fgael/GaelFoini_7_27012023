@@ -1,34 +1,45 @@
-// Sélectionnez les éléments du DOM
-const containerInputIngredients = document.getElementById("container-ingredients");
-const resultMenuIngredients = document.getElementById("result-menu-ingredients");
-const inputIngredient = document.getElementById("input-ingredients");
-const imgArrow = document.querySelector("#container-ingredients img");
+class Display {
+  constructor(container, input, result, arrow, placeholder) {
+     this.container = document.getElementById(container);
+     this.container_gp = this.container.parentElement.parentElement;
+     this.input = document.getElementById(input);
+     this.result = document.getElementById(result);
+     this.arrow = document.querySelector(arrow);
 
-// Affichez la liste d'ingrédients
-containerInputIngredients.addEventListener("click", () => {
-resultMenuIngredients.classList.toggle("d-none");
+     // placeholder
+     this.placeholder = placeholder;
+     this.placeholder_search = "Rechercher un " + placeholder;
+  }
 
-// Si la liste d'ingrédients est masquée, ajustez la largeur du conteneur à 100%
-// Sinon, ajustez la largeur à 650px
-containerInputIngredients.style.width =
-resultMenuIngredients.classList.contains("d-none") ? "100%" : "650px";
+  toggleResultMenu() {
+     this.result.classList.toggle("d-none");
+     this.container_gp.classList.toggle("col-md-6");
+     this.input.placeholder = this.result.classList.contains("d-none") ? this.placeholder : this.placeholder_search;
+     this.arrow.classList.toggle("rotate-img_event");
+  }
 
-// Changez le placeholder du champ de saisie en fonction de l'état de la liste d'ingrédients
-inputIngredient.placeholder =
-resultMenuIngredients.classList.contains("d-none") ? "Ingrédients" : "Rechercher un ingrédient";
-
-// Changez l'image de la flèche en fonction de l'état de la liste d'ingrédients
-imgArrow.src =
-resultMenuIngredients.classList.contains("d-none") ? "assets/icons/arrow-down.svg" : "assets/icons/arrow-up.svg";
-});
-
-// Masquez la liste d'ingrédients
-document.addEventListener("click", (event) => {
-// Si l'utilisateur clique en dehors du conteneur ou de la liste d'ingrédients, masquez la liste d'ingrédients
-if (!containerInputIngredients.contains(event.target) && !resultMenuIngredients.contains(event.target)) {
-resultMenuIngredients.classList.add("d-none");
-containerInputIngredients.style.width = "100%";
-inputIngredient.placeholder = "Ingrédients";
-imgArrow.src = "assets/icons/arrow-down.svg";
+  hideResultMenu() {
+     this.result.classList.add("d-none");
+     this.container_gp.classList.remove("col-md-6");
+     this.input.placeholder = this.placeholder;
+  }
 }
+
+const displayTypes = [
+  { containerId: 'container-ingredients', inputId: 'input-ingredients', resultId: 'result-menu-ingredients', arrowId: '#container-ingredients img', placeholderText: 'Ingrédients' },
+  { containerId: 'container-appareils', inputId: 'input-appareils', resultId: 'result-menu-appareils', arrowId: '#container-appareils img', placeholderText: 'Appareils' },
+  { containerId: 'container-ustensile', inputId: 'input-ustensile', resultId: 'result-menu-ustensile', arrowId: '#container-ustensile img', placeholderText: 'Ustensiles' }
+];
+
+displayTypes.forEach(displayType => {
+  let POO = new Display(
+     displayType.containerId,
+     displayType.inputId,
+     displayType.resultId,
+     displayType.arrowId,
+     displayType.placeholderText);
+
+  POO.container.addEventListener('click', () => {
+     POO.toggleResultMenu();
+  });
 });
