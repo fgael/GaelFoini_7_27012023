@@ -44,6 +44,90 @@ async function searchRecipes(query) {
   }
 }
 
+function capitalizeFirstLetter(list) {
+  return list.map((item) => {
+    return item.charAt(0).toUpperCase() + item.slice(1);
+  });
+}
+
+async function displaySelectContent(recipes) {
+  try {
+
+// Utilisation de la fonction pour la liste des ingrédients
+const ingredientsList = capitalizeFirstLetter(recipes.reduce((ingredients, recipe) => {
+  recipe.ingredients.forEach((ingredient) => {
+    const ingredientName = ingredient.ingredient;
+    if (!ingredients.includes(ingredientName)) {
+      ingredients.push(ingredientName);
+    }
+  });
+  return ingredients;
+}, []));
+
+// Utilisation de la fonction pour la liste des appareils
+const appliancesList = capitalizeFirstLetter(recipes.reduce((appliances, recipe) => {
+  const applianceName = recipe.appliance;
+  if (!appliances.includes(applianceName)) {
+    appliances.push(applianceName);
+  }
+  return appliances;
+}, []));
+
+// Utilisation de la fonction pour la liste des ustensiles
+const ustensilsList = capitalizeFirstLetter(recipes.reduce((ustensils, recipe) => {
+  recipe.ustensils.forEach((ustensil) => {
+    if (!ustensils.includes(ustensil)) {
+      ustensils.push(ustensil);
+    }
+  });
+  return ustensils;
+}, []));
+
+    
+    // Création de l'élément contenant la liste des ingrédients
+    const ingredientsContainer = document.getElementById('result-menu-ingredients');
+    ingredientsContainer.innerHTML = ""
+    const ingredientsListContainer = document.createElement("div");
+    ingredientsListContainer.classList.add("row");
+    ingredientsList.forEach((ingredient) => {
+      const ingredientCol = document.createElement("div");
+      ingredientCol.classList.add("col-6", "col-md-4");
+      ingredientCol.textContent = ingredient;
+      ingredientsListContainer.appendChild(ingredientCol);
+    });
+    ingredientsContainer.appendChild(ingredientsListContainer);
+
+    // Création de l'élément contenant la liste des appareils
+    const appliancesContainer = document.getElementById('result-menu-appareils');
+    appliancesContainer.innerHTML = ""
+    const appliancesListContainer = document.createElement("div");
+    appliancesListContainer.classList.add("row");
+    appliancesList.forEach((appliance) => {
+      const applianceCol = document.createElement("div");
+      applianceCol.classList.add("col-6", "col-md-4");
+      applianceCol.textContent = appliance;
+      appliancesListContainer.appendChild(applianceCol);
+    });
+    appliancesContainer.appendChild(appliancesListContainer);
+
+    // Création de l'élément contenant la liste des ustensiles
+    const ustensilsContainer = document.getElementById('result-menu-ustensile');
+    ustensilsContainer.innerHTML = ""
+    const ustensilsListContainer = document.createElement("div");
+    ustensilsListContainer.classList.add("row");
+    ustensilsList.forEach((ustensil) => {
+      const ustensilCol = document.createElement("div");
+      ustensilCol.classList.add("col-6", "col-md-4");
+      ustensilCol.textContent = ustensil;
+      ustensilsListContainer.appendChild(ustensilCol);
+    });
+    ustensilsContainer.appendChild(ustensilsListContainer);
+
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 // Fonction de récupération des données de recettes depuis le fichier JSON
 async function getRecipes() {
   try {
@@ -72,12 +156,14 @@ async function displayData(recipes) {
   });
 }
 
-// Fonction d'initialisation de la grille de recettes
+// Fonction d'initialisation
 async function init() {
   // Récupération de toutes les recettes
   const recipes = await getRecipes();
   // Affichage de toutes les recettes dans la grille
   displayData(recipes);
+  // Affichage du contenu des boutons select
+  displaySelectContent(recipes);
 }
 
 // Appel de la fonction d'initialisation au chargement de la page

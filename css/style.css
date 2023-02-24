@@ -65,10 +65,17 @@ label:focus,
 	width: auto;
 }
 
+#result-menu-ingredients,
+#result-menu-appareils,
+#result-menu-ustensile {
+	max-height: 300px;
+	overflow: auto;
+}
+
 /* Tag list*/
-#result-menu-ingredients .col-4,
-#result-menu-appareils .col-4,
-#result-menu-ustensile .col-4{
+#result-menu-ingredients .col-6, .col-md-4,
+#result-menu-appareils .col-6, .col-md-4,
+#result-menu-ustensile .col-6, .col-md-4{
 	font-family: var(--title-font);
 	font-weight: var(--text-weight);
 	font-size: var(--title-font-size);
