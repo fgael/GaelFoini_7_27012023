@@ -1,6 +1,7 @@
-import selectButtonFactory from "./factory/selectButtonFactory.js"
-import recipeCardFactory from "./factory/recipeCardFactory.js";
-import capitalizeFirstLetter from "./utils/capitalizeFirstLetter.js"
+import { selectButtonFactory } from "./factory/selectButtonFactory.js"
+import { recipeCardFactory } from "./factory/recipeCardFactory.js";
+import { capitalizeFirstLetter } from "./utils/capitalizeFirstLetter.js"
+
 
 // Récupération de l'élément input de recherche
 const searchInput = document.getElementById("floatingInput");
@@ -9,6 +10,39 @@ const ingredientsInput = document.getElementById("input-ingredients");
 const appliancesInput = document.getElementById("input-appareils");
 const ustensilsInput = document.getElementById("input-ustensile");
 const selectInputGroup = [ingredientsInput, appliancesInput, ustensilsInput];
+
+export async function searchTag() {
+  const isTag = document.querySelector('.badge') !== null;
+  if (isTag) {
+    const tag = document.querySelector('.tag')
+    const recipes = await getRecipes();
+
+    const filteredIngredients = recipes.filter(recipe => {
+      for (const ingredient of recipe.ingredients) {
+        if (ingredient.ingredient.toLowerCase() === tag.textContent.toLowerCase()) {
+          return ingredient.ingredient
+        }
+      }
+    });
+    const filteredAppliance = recipes.filter(recipe => {
+      if (recipe.appliance.toLowerCase() === tag.textContent.toLowerCase()) {
+        return recipe.appliance
+      }
+    })
+    const filteredUstensils = recipes.filter(recipe => {
+      console.log(recipe)
+      for (const ustensil of recipe.ustensils) {
+        if(ustensil.toLowerCase() === tag.textContent.toLowerCase()) {
+          return ustensil
+        }
+      }
+    })
+    const results = filteredIngredients.concat(filteredAppliance, filteredUstensils);
+
+    displayRecipes(results);
+  
+  }
+}
 
 // Ajout d'un écouteur d'événement sur l'input de recherche principal
 searchInput.addEventListener("keyup", () => {
@@ -74,6 +108,7 @@ async function searchRecipes(query) {
     displayRecipes(results);
     displayFilteredRecipesSelect(results);
     searchFilteredSelect();
+    searchTag()
 
     function searchFilteredSelect() {
     
@@ -244,13 +279,14 @@ function displayRecipes(recipes) {
 }
 
 // Fonction d'initialisation
-async function init() {
+export async function init() {
   // Récupération de toutes les recettes
   const recipes = await getRecipes();
   // Affichage de toutes les recettes dans la grille
   displayRecipes(recipes);
   // Affichage du contenu des boutons select
   displaySelectContent(recipes);
+  console.log("close")
 }
 
 // Appel de la fonction d'initialisation au chargement de la page

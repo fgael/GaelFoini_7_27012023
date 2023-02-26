@@ -1,6 +1,6 @@
-import tagBadgeFactory from "../factory/tagBadgeFactory.js";
+import { tagBadgeFactory } from "../factory/tagBadgeFactory.js";
 
-export default function selectButtonFactory(ingredientsList, appliancesList, ustensilsList) {
+export function selectButtonFactory(ingredientsList, appliancesList, ustensilsList) {
 
   // Création de l'élément contenant la liste des ingrédients
   const ingredientsContainer = document.getElementById("result-menu-ingredients");
@@ -12,7 +12,7 @@ export default function selectButtonFactory(ingredientsList, appliancesList, ust
     ingredientCol.classList.add("col-6", "col-md-4");
     ingredientCol.textContent = ingredient;
     ingredientCol.addEventListener("click", () => {
-      tagBadgeFactory(ingredient, "text-bg-primary")
+      tagBadgeFactory(ingredient, "text-bg-primary", "ingredient")
     })
     ingredientsListContainer.appendChild(ingredientCol);
   });
@@ -28,7 +28,7 @@ export default function selectButtonFactory(ingredientsList, appliancesList, ust
     applianceCol.classList.add("col-6", "col-md-4");
     applianceCol.textContent = appliance;
     applianceCol.addEventListener("click", () => {
-      tagBadgeFactory(appliance, "text-bg-success")
+      tagBadgeFactory(appliance, "text-bg-success", "appliance")
     })
     appliancesListContainer.appendChild(applianceCol);
   });
@@ -44,7 +44,7 @@ export default function selectButtonFactory(ingredientsList, appliancesList, ust
     ustensilCol.classList.add("col-6", "col-md-4");
     ustensilCol.textContent = ustensil;
     ustensilCol.addEventListener("click", () => {
-      tagBadgeFactory(ustensil, "text-bg-danger")
+      tagBadgeFactory(ustensil, "text-bg-danger", "ustensile")
     })
     ustensilsListContainer.appendChild(ustensilCol);
   });
