@@ -1,15 +1,15 @@
 export default function recipeCardFactory(data) {
   // Récupération des données de la recette
-  const recipe = data;
-  const {
-    name,
-    ingredients,
-    time,
-    description,
-  } = recipe;
 
   // Fonction pour créer un élément de recette dans le DOM
   function createRecipeCard() {
+    const recipe = data;
+    const {
+      name,
+      ingredients,
+      time,
+      description,
+    } = recipe;
     // Création de la carte de recette
     const clockImgPath = "assets/icons/horloge.svg";
     const recipeCard = document.createElement("div");
@@ -88,5 +88,19 @@ export default function recipeCardFactory(data) {
     return recipeCard;
   }
 
-  return { createRecipeCard };
+  function createNoResultsRecipeCard () {
+    const noFoundCardContainer = document.createElement("div");
+    const noFoundCard = document.createElement("div");
+    noFoundCardContainer.classList.add( "d-flex", "justify-content-center")
+    noFoundCard.classList.add("no-result")
+    const noFoundText = document.createElement("p");
+    noFoundText.classList.add("m-0", "text-center")
+    noFoundText.textContent = "Aucune recette ne correspond à votre critère… vous pouvez chercher « tarte aux pommes », « poisson », etc.";
+    noFoundCardContainer.appendChild(noFoundCard)
+    noFoundCard.appendChild(noFoundText)
+
+    return noFoundCardContainer;
+  }
+
+  return { createRecipeCard, createNoResultsRecipeCard };
 }

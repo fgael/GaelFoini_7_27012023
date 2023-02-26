@@ -19,6 +19,7 @@
 	--bold-weight: 700;
 	--tag-font-size: 14px;
 	--tag-line-height: 16.8px;
+	--result-font-size: 15px;
 }
 
 /* Supprime le border lors du click et du hover de Bootstrap  */
@@ -177,6 +178,17 @@ span {
 	font-family: var(--text-font);
 	font-weight: var(--bold-weight);
 	font-size: var(--tag-font-size);
+	line-height: var(--tag-line-height);
+}
+
+.no-result {
+	margin-top: 100px;
+}
+
+.no-result p {
+	font-family: var(--text-font);
+	font-weight: var(--text-weight);
+	font-size: var(--result-font-size);
 	line-height: var(--tag-line-height);
 }
 

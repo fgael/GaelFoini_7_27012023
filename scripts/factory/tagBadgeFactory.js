@@ -13,6 +13,9 @@ export default function tagBadgeFactory(element, color){
   imgClose.src = closeImgPath;
   imgClose.alt = "Supprimer tag"
   imgClose.classList.add("ps-3", "close")
+  imgClose.addEventListener("click", () => {
+    tagContainer.innerHTML = "";
+  })
   tagBadge.appendChild(tagName)
   tagBadge.appendChild(imgClose)
   tagContainer.appendChild(tagBadge)
