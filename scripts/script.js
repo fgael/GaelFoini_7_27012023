@@ -1,10 +1,14 @@
+import selectButtonFactory from "./factory/selectButtonFactory.js"
+import recipeCardFactory from "./factory/recipeCardFactory.js";
+import capitalizeFirstLetter from "./utils/capitalizeFirstLetter.js"
+
 // Récupération de l'élément input de recherche
 const searchInput = document.getElementById("floatingInput");
 // Récupération des champs de recherche avancée
 const ingredientsInput = document.getElementById("input-ingredients");
 const appliancesInput = document.getElementById("input-appareils");
 const ustensilsInput = document.getElementById("input-ustensile");
-const inputElements = [ingredientsInput, appliancesInput, ustensilsInput];
+const selectInputGroup = [ingredientsInput, appliancesInput, ustensilsInput];
 
 // Ajout d'un écouteur d'événement sur l'input de recherche principal
 searchInput.addEventListener("keyup", () => {
@@ -73,7 +77,7 @@ async function searchRecipes(query) {
 
     function searchFilteredSelect() {
     
-      inputElements.forEach(function (element) {
+      selectInputGroup.forEach(function (element) {
         element.addEventListener("keyup", () => {
         const query = element.value.toLowerCase();
 

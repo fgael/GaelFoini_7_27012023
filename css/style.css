@@ -17,6 +17,8 @@
 	--description-line-height: 12px;
 
 	--bold-weight: 700;
+	--tag-font-size: 14px;
+	--tag-line-height: 16.8px;
 }
 
 /* Supprime le border lors du click et du hover de Bootstrap  */
@@ -157,6 +159,25 @@ span {
 .ingredients {
 	height: 101px;
 	overflow-y: auto;
+}
+
+/* Badge */
+
+.badge {
+	height: 37px;
+	max-width: fit-content;
+}
+
+.badge img {
+	height: 20px;
+	cursor: pointer;
+}
+
+.badge p {
+	font-family: var(--text-font);
+	font-weight: var(--bold-weight);
+	font-size: var(--tag-font-size);
+	line-height: var(--tag-line-height);
 }
 
 /* ===== Scrollbar CSS ===== */
