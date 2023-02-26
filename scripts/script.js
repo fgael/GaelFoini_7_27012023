@@ -20,17 +20,15 @@ searchInput.addEventListener("keyup", () => {
   }
 });
 
-
-
 async function searchRecipes(query) {
   try {
     // Récupération de toutes les recettes
     const recipes = await getRecipes();
 
-    // Initialisation des tableaux pour les ingrédients, appareils et ustensiles correspondant à la recherche
-    const matchingIngredients = [];
-    const matchingAppliances = [];
-    const matchingUstensils = [];
+    // Initialisation des ensembles pour les ingrédients, appareils et ustensiles correspondant à la recherche
+    const matchingIngredientsSet = new Set();
+    const matchingAppliancesSet = new Set();
+    const matchingUstensilsSet = new Set();
 
     // Filtrage des recettes qui correspondent à la requête de recherche
     const results = recipes
@@ -44,85 +42,91 @@ async function searchRecipes(query) {
         const descriptionMatch = recipe.description
           .toLowerCase()
           .includes(query.toLowerCase());
-        const applianceMatch = recipe.appliance
-          .toLowerCase()
-          .includes(query.toLowerCase());
-        const ustensilsMatch = recipe.ustensils.filter((ustensil) =>
-            ustensil.toLowerCase().includes(query.toLowerCase())
+        if (titleMatch || ingredientsMatch.length > 0 || descriptionMatch) {
+          // Ajout des noms d'ingrédients correspondant à la recherche dans l'ensemble Set
+          recipe.ingredients.forEach((ingredient) =>
+            matchingIngredientsSet.add(ingredient.ingredient.toLowerCase())
           );
-        if (
-          titleMatch ||
-          ingredientsMatch.length > 0 ||
-          descriptionMatch ||
-          applianceMatch ||
-          ustensilsMatch.length > 0
-        ) {
-          // Ajout des ingrédients, appareils et ustensiles correspondant à la recherche
-          matchingIngredients.push(...ingredientsMatch);
-          if (applianceMatch) {
-            matchingAppliances.push(recipe.appliance);
-          }
-          matchingUstensils.push(...ustensilsMatch);
 
+          matchingAppliancesSet.add(recipe.appliance);
+
+          recipe.ustensils.forEach((ustensil) =>
+            matchingUstensilsSet.add(ustensil.toLowerCase())
+          );
 
           return recipe;
         }
       })
       .filter(Boolean);
+
+    // Convertir l'ensemble Set en un tableau pour avoir la liste finale d'ingrédients correspondant à la recherche
+    const matchingIngredients = Array.from(matchingIngredientsSet).map(
+      (ingredientName) => ({ ingredient: ingredientName })
+    );
+    const matchingAppliances = Array.from(matchingAppliancesSet);
+    const matchingUstensils = Array.from(matchingUstensilsSet);
+
     // Affichage des recettes filtrées
     displayRecipes(results);
-    displayFilteredSelectContent(results);
-    searchFilteredSelectContent(results)
+    displayFilteredRecipesSelect(results);
+    searchFilteredSelect();
 
-    function searchFilteredSelectContent(data) {
-      inputElements.forEach(function(element) {
+    function searchFilteredSelect() {
+    
+      inputElements.forEach(function (element) {
         element.addEventListener("keyup", () => {
-          const query = element.value.toLowerCase();
-          
-          const filteredResults = {
-            ingredients: [],
-            appliances: [],
-            ustensils: [],
-          };
-          
-          const ingredientsSet = new Set(); // ensemble pour stocker les ingrédients sans doublons
-          const ustensilsSet = new Set(); // ensemble pour stocker les ustensiles sans doublons
-          
-          data.forEach(item => {
-            // filtrer les ingrédients
-            item.ingredients.forEach(ingredient => {
-              if (ingredient.ingredient.toLowerCase().includes(query)) {
-                ingredientsSet.add(ingredient.ingredient.toLowerCase());
-              }
-            });
-            
-            // filtrer les appareils
-            if (item.appliance.toLowerCase().includes(query)) {
-              filteredResults.appliances.push(item.appliance);
-            }
-            
-            // filtrer les ustensiles
-            item.ustensils.forEach(ustensil => {
-              if (ustensil.toLowerCase().includes(query)) {
-                ustensilsSet.add(ustensil.toLowerCase());
-              }
-            });
-          });
-          
-          // convertir les ensembles en tableaux
-          filteredResults.ingredients = capitalizeFirstLetter(Array.from(ingredientsSet));
-          filteredResults.ustensils = capitalizeFirstLetter(Array.from(ustensilsSet));
-          
-          selectButtonFactory(filteredResults.ingredients, filteredResults.appliances, filteredResults.ustensils);
-        })
-      })
-    }
-    
-    
-    
-    
+        const query = element.value.toLowerCase();
 
-    
+        if (element.id == "input-ingredients"){
+          const matchingIngredientsNames = matchingIngredients.map(
+            (ingredient) => ingredient.ingredient
+          );
+          const filteredIngredients = matchingIngredientsNames.filter((ingredient) => {
+            return ingredient.toLowerCase().includes(query);
+          })
+          const uniqIngredients = [...new Set(filteredIngredients)]
+
+          selectButtonFactory(
+            capitalizeFirstLetter(uniqIngredients),
+            matchingAppliances,
+            capitalizeFirstLetter(matchingUstensils)
+          );
+        }
+
+        if (element.id == "input-appareils"){
+          const matchingIngredientsNames = matchingIngredients.map(
+            (ingredient) => ingredient.ingredient
+          );
+          const filteredAppliances = matchingAppliances.filter((appliance) => {
+            return appliance.toLowerCase().includes(query);
+          });
+          const uniqAppliances = [...new Set(filteredAppliances)];
+  
+          selectButtonFactory(
+            capitalizeFirstLetter(matchingIngredientsNames),
+            uniqAppliances,
+            capitalizeFirstLetter(matchingUstensils)
+          );
+        }
+
+        if (element.id == "input-ustensile"){
+          const matchingIngredientsNames = matchingIngredients.map(
+            (ingredient) => ingredient.ingredient
+          );
+          const filteredUstensils = matchingUstensils.filter((ustensil) => {
+            return ustensil.toLowerCase().includes(query);
+          });
+          const uniqUstensils = [...new Set(filteredUstensils)];
+
+          selectButtonFactory(
+            capitalizeFirstLetter(matchingIngredientsNames),
+            matchingAppliances,
+            capitalizeFirstLetter(uniqUstensils)
+          );
+        }
+
+      });
+    })}
   } catch (error) {
     console.log(error);
   }
@@ -133,7 +137,7 @@ async function displaySelectContent(data) {
   const ingredientsList = capitalizeFirstLetter(
     data.reduce((ingredients, recipe) => {
       recipe.ingredients.forEach((ingredient) => {
-        const ingredientName = ingredient.ingredient;
+        const ingredientName = ingredient.ingredient.toLowerCase();
         if (!ingredients.includes(ingredientName)) {
           ingredients.push(ingredientName);
         }
@@ -144,7 +148,7 @@ async function displaySelectContent(data) {
 
   const appliancesList = capitalizeFirstLetter(
     data.reduce((appliances, recipe) => {
-      const applianceName = recipe.appliance;
+      const applianceName = recipe.appliance.toLowerCase();
       if (!appliances.includes(applianceName)) {
         appliances.push(applianceName);
       }
@@ -155,25 +159,49 @@ async function displaySelectContent(data) {
   const ustensilsList = capitalizeFirstLetter(
     data.reduce((ustensils, recipe) => {
       recipe.ustensils.forEach((ustensil) => {
+        const ustensilName = ustensil.toLowerCase();
         if (!ustensils.includes(ustensil)) {
-          ustensils.push(ustensil);
+          ustensils.push(ustensilName);
         }
       });
       return ustensils;
     }, [])
   );
 
+  const uniqIngredientsList = [...new Set(ingredientsList)];
+  const uniqappliancesList = [...new Set(appliancesList)];
+  const uniqustensilsList = [...new Set(ustensilsList)];
   // Création de l'élément contenant la liste des ingrédients
-  selectButtonFactory(ingredientsList, appliancesList, ustensilsList);
+  selectButtonFactory(
+    uniqIngredientsList,
+    uniqappliancesList,
+    uniqustensilsList
+  );
 }
 
-async function displayFilteredSelectContent(data) {
-  const ingredientsList = capitalizeFirstLetter(data.flatMap(recipe => recipe.ingredients.map(ingredient => ingredient.ingredient)));
-  const appliancesList = capitalizeFirstLetter(data.map(recipe => recipe.appliance));
-  const ustensilsList = capitalizeFirstLetter(data.flatMap(recipe => recipe.ustensils));
+async function displayFilteredRecipesSelect(data) {
+  const ingredientsList = capitalizeFirstLetter(
+    data.flatMap((recipe) =>
+      recipe.ingredients.map((ingredient) => ingredient.ingredient)
+    )
+  );
+  const appliancesList = capitalizeFirstLetter(
+    data.map((recipe) => recipe.appliance)
+  );
+  const ustensilsList = capitalizeFirstLetter(
+    data.flatMap((recipe) => recipe.ustensils)
+  );
+
+  const uniqIngredientsList = [...new Set(ingredientsList)];
+  const uniqappliancesList = [...new Set(appliancesList)];
+  const uniqustensilsList = [...new Set(ustensilsList)];
 
   // Création de l'élément contenant la liste des ingrédients
-  selectButtonFactory(ingredientsList, appliancesList, ustensilsList);
+  selectButtonFactory(
+    uniqIngredientsList,
+    uniqappliancesList,
+    uniqustensilsList
+  );
 }
 
 // Fonction de récupération des données de recettes depuis le fichier JSON
