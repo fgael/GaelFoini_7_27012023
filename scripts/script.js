@@ -1,7 +1,6 @@
-import { selectButtonFactory } from "./factory/selectButtonFactory.js"
+import { selectButtonFactory } from "./factory/selectButtonFactory.js";
 import { recipeCardFactory } from "./factory/recipeCardFactory.js";
-import { capitalizeFirstLetter } from "./utils/capitalizeFirstLetter.js"
-
+import { capitalizeFirstLetter } from "./utils/capitalizeFirstLetter.js";
 
 // Récupération de l'élément input de recherche
 const searchInput = document.getElementById("floatingInput");
@@ -11,56 +10,17 @@ const appliancesInput = document.getElementById("input-appareils");
 const ustensilsInput = document.getElementById("input-ustensile");
 const selectInputGroup = [ingredientsInput, appliancesInput, ustensilsInput];
 
-export async function searchTag() {
-  const isTag = document.querySelector('.badge') !== null;
-  if (isTag) {
-    const tag = document.querySelector('.tag')
-    const recipes = await getRecipes();
-
-    const filteredIngredients = recipes.filter(recipe => {
-      for (const ingredient of recipe.ingredients) {
-        if (ingredient.ingredient.toLowerCase() === tag.textContent.toLowerCase()) {
-          return ingredient.ingredient
-        }
-      }
-    });
-    const filteredAppliance = recipes.filter(recipe => {
-      if (recipe.appliance.toLowerCase() === tag.textContent.toLowerCase()) {
-        return recipe.appliance
-      }
-    })
-    const filteredUstensils = recipes.filter(recipe => {
-      console.log(recipe)
-      for (const ustensil of recipe.ustensils) {
-        if(ustensil.toLowerCase() === tag.textContent.toLowerCase()) {
-          return ustensil
-        }
-      }
-    })
-    const results = filteredIngredients.concat(filteredAppliance, filteredUstensils);
-
-    displayRecipes(results);
-  
-  }
-}
-
-// Ajout d'un écouteur d'événement sur l'input de recherche principal
 searchInput.addEventListener("keyup", () => {
-  // Récupération de la valeur de l'input
   const query = searchInput.value;
-  // Vérification si la valeur de l'input contient au moins 3 caractères
   if (query.length >= 3) {
-    // Appel de la fonction de recherche avec la valeur de l'input comme argument
-    searchRecipes(query);
-  } else {
-    // Appel de la fonction d'initialisation si la valeur de l'input est inférieure à 3 caractères
-    init();
-  }
+    searchRecipes();
+  } else {init()}
 });
 
-async function searchRecipes(query) {
-  try {
-    // Récupération de toutes les recettes
+export async function searchRecipeTag() {
+  const isTag = document.querySelector(".badge") !== null;
+  if (isTag) {
+    const tag = document.querySelector(".tag");
     const recipes = await getRecipes();
 
     // Initialisation des ensembles pour les ingrédients, appareils et ustensiles correspondant à la recherche
@@ -69,8 +29,44 @@ async function searchRecipes(query) {
     const matchingUstensilsSet = new Set();
 
     // Filtrage des recettes qui correspondent à la requête de recherche
-    const results = recipes
-      .map((recipe) => {
+    const results = recipes.filter((recipe) => {
+      const titleMatch = recipe.name
+        .toLowerCase()
+        .includes(tag.textContent.toLowerCase());
+      const ingredientsMatch = recipe.ingredients.filter((ingredient) =>
+        ingredient.ingredient
+          .toLowerCase()
+          .includes(tag.textContent.toLowerCase())
+      );
+      const descriptionMatch = recipe.description
+        .toLowerCase()
+        .includes(tag.textContent.toLowerCase());
+      if (titleMatch || ingredientsMatch.length > 0 || descriptionMatch) {
+        // Ajout des noms d'ingrédients correspondant à la recherche dans l'ensemble Set
+        recipe.ingredients.forEach((ingredient) =>
+          matchingIngredientsSet.add(ingredient.ingredient.toLowerCase())
+        );
+
+        matchingAppliancesSet.add(recipe.appliance);
+
+        recipe.ustensils.forEach((ustensil) =>
+          matchingUstensilsSet.add(ustensil.toLowerCase())
+        );
+
+        return true;
+      }
+      return false;
+    });
+    displayRecipes(results);
+    const query = searchInput.value.toLowerCase();
+    if (query.length >= 3) {
+      // Initialisation des ensembles pour les ingrédients, appareils et ustensiles correspondant à la recherche
+      const matchingIngredientsSet = new Set();
+      const matchingAppliancesSet = new Set();
+      const matchingUstensilsSet = new Set();
+
+      // Filtrage des recettes qui correspondent à la requête de recherche
+      const tagAndQueryResult = results.filter((recipe) => {
         const titleMatch = recipe.name
           .toLowerCase()
           .includes(query.toLowerCase());
@@ -92,80 +88,187 @@ async function searchRecipes(query) {
             matchingUstensilsSet.add(ustensil.toLowerCase())
           );
 
-          return recipe;
+          return true;
         }
-      })
-      .filter(Boolean);
+        return false;
+      });
+      displayRecipes(tagAndQueryResult);
+    }
+  }
+}
 
-    // Convertir l'ensemble Set en un tableau pour avoir la liste finale d'ingrédients correspondant à la recherche
-    const matchingIngredients = Array.from(matchingIngredientsSet).map(
-      (ingredientName) => ({ ingredient: ingredientName })
-    );
-    const matchingAppliances = Array.from(matchingAppliancesSet);
-    const matchingUstensils = Array.from(matchingUstensilsSet);
+async function searchRecipes() {
+  // Récupération de toutes les recettes
+  const recipes = await getRecipes();
+  // Récupération de la valeur de l'input
+  const query = searchInput.value;
+  if (query.length >= 3) {
+    // Initialisation des ensembles pour les ingrédients, appareils et ustensiles correspondant à la recherche
+    const matchingIngredientsSet = new Set();
+    const matchingAppliancesSet = new Set();
+    const matchingUstensilsSet = new Set();
+
+    // Filtrage des recettes qui correspondent à la requête de recherche
+    const results = recipes.filter((recipe) => {
+      const titleMatch = recipe.name
+        .toLowerCase()
+        .includes(query.toLowerCase());
+      const ingredientsMatch = recipe.ingredients.filter((ingredient) =>
+        ingredient.ingredient.toLowerCase().includes(query.toLowerCase())
+      );
+      const descriptionMatch = recipe.description
+        .toLowerCase()
+        .includes(query.toLowerCase());
+      if (titleMatch || ingredientsMatch.length > 0 || descriptionMatch) {
+        // Ajout des noms d'ingrédients correspondant à la recherche dans l'ensemble Set
+        recipe.ingredients.forEach((ingredient) =>
+          matchingIngredientsSet.add(ingredient.ingredient.toLowerCase())
+        );
+        matchingAppliancesSet.add(recipe.appliance);
+        recipe.ustensils.forEach((ustensil) =>
+          matchingUstensilsSet.add(ustensil.toLowerCase())
+        );
+        return true;
+      }
+      return false;
+    });
 
     // Affichage des recettes filtrées
     displayRecipes(results);
+    // Affichage du contenu des boutons select correspondant aux recettes
+    searchFilteredSelect(results);
+    // Filtrage du resultat boutons select
     displayFilteredRecipesSelect(results);
-    searchFilteredSelect();
-    searchTag()
+    // Affichage des recettes filtrées avec tag
+    searchRecipeTag(results);
+  } else {
+    // Appel de la fonction d'initialisation si la valeur de l'input est inférieure à 3 caractères
+    init();
+  }
+}
 
-    function searchFilteredSelect() {
-    
-      selectInputGroup.forEach(function (element) {
-        element.addEventListener("keyup", () => {
-        const query = element.value.toLowerCase();
+function searchFilteredSelect(data) {
+  selectInputGroup.forEach(function (element) {
+    element.addEventListener("keyup", () => {
+      const query = element.value.toLowerCase();
 
-        if (element.id == "input-ingredients"){
-          const matchingIngredientsNames = matchingIngredients.map(
-            (ingredient) => ingredient.ingredient
-          );
-          const filteredIngredients = matchingIngredientsNames.filter((ingredient) => {
-            return ingredient.toLowerCase().includes(query);
-          })
-          const uniqIngredients = [...new Set(filteredIngredients)]
+      // Filtrage resultat tag ingredients
+      if (element.id == "input-ingredients") {
+        const { ingredients, appliances, utensils } = getFilteredItems(
+          data,
+          query
+        );
+        selectButtonFactory(
+          capitalizeFirstLetter(ingredients),
+          capitalizeFirstLetter(appliances),
+          capitalizeFirstLetter(utensils)
+        );
+      }
 
-          selectButtonFactory(
-            capitalizeFirstLetter(uniqIngredients),
-            matchingAppliances,
-            capitalizeFirstLetter(matchingUstensils)
-          );
-        }
+      // Filtrage resultat tag appareils
+      if (element.id == "input-appareils") {
+        const { ingredients, appliances, utensils } = getFilteredItems(
+          data,
+          query
+        );
+        selectButtonFactory(
+          capitalizeFirstLetter(ingredients),
+          capitalizeFirstLetter(appliances),
+          capitalizeFirstLetter(utensils)
+        );
+      }
 
-        if (element.id == "input-appareils"){
-          const matchingIngredientsNames = matchingIngredients.map(
-            (ingredient) => ingredient.ingredient
-          );
-          const filteredAppliances = matchingAppliances.filter((appliance) => {
-            return appliance.toLowerCase().includes(query);
-          });
-          const uniqAppliances = [...new Set(filteredAppliances)];
-  
-          selectButtonFactory(
-            capitalizeFirstLetter(matchingIngredientsNames),
-            uniqAppliances,
-            capitalizeFirstLetter(matchingUstensils)
-          );
-        }
+      // Filtrage resultat tag ustensiles
+      if (element.id == "input-ustensile") {
+        const { ingredients, appliances, utensils } = getFilteredItems(
+          data,
+          query
+        );
+        selectButtonFactory(
+          capitalizeFirstLetter(ingredients),
+          capitalizeFirstLetter(appliances),
+          capitalizeFirstLetter(utensils)
+        );
+      }
+    });
+  });
+}
 
-        if (element.id == "input-ustensile"){
-          const matchingIngredientsNames = matchingIngredients.map(
-            (ingredient) => ingredient.ingredient
-          );
-          const filteredUstensils = matchingUstensils.filter((ustensil) => {
-            return ustensil.toLowerCase().includes(query);
-          });
-          const uniqUstensils = [...new Set(filteredUstensils)];
+function getFilteredItems(data, query) {
+  const lowercaseQuery = query.toLowerCase();
+  const ingredients = [];
+  const appliances = [];
+  const utensils = [];
 
-          selectButtonFactory(
-            capitalizeFirstLetter(matchingIngredientsNames),
-            matchingAppliances,
-            capitalizeFirstLetter(uniqUstensils)
-          );
-        }
+  data.forEach((recipe) => {
+    recipe.ingredients.forEach((ingredient) => {
+      const ingredientName = ingredient.ingredient.toLowerCase();
+      if (
+        ingredientName.includes(lowercaseQuery) &&
+        !ingredients.includes(ingredientName)
+      ) {
+        ingredients.push(ingredientName);
+      }
+    });
 
-      });
-    })}
+    const applianceName = recipe.appliance.toLowerCase();
+    if (
+      applianceName.includes(lowercaseQuery) &&
+      !appliances.includes(applianceName)
+    ) {
+      appliances.push(applianceName);
+    }
+
+    recipe.ustensils.forEach((utensil) => {
+      const utensilName = utensil.toLowerCase();
+      if (
+        utensilName.includes(lowercaseQuery) &&
+        !utensils.includes(utensilName)
+      ) {
+        utensils.push(utensilName);
+      }
+    });
+  });
+
+  return { ingredients, appliances, utensils };
+}
+
+async function displayFilteredRecipesSelect(data) {
+  const ingredientsList = capitalizeFirstLetter(
+    data.flatMap((recipe) =>
+      recipe.ingredients.map((ingredient) => ingredient.ingredient)
+    )
+  );
+  const appliancesList = capitalizeFirstLetter(
+    data.map((recipe) => recipe.appliance)
+  );
+  const ustensilsList = capitalizeFirstLetter(
+    data.flatMap((recipe) => recipe.ustensils)
+  );
+
+  const uniqIngredientsList = [...new Set(ingredientsList)];
+  const uniqappliancesList = [...new Set(appliancesList)];
+  const uniqustensilsList = [...new Set(ustensilsList)];
+
+  // Création de l'élément contenant la liste des ingrédients
+  selectButtonFactory(
+    uniqIngredientsList,
+    uniqappliancesList,
+    uniqustensilsList
+  );
+}
+
+// Fonction de récupération des données de recettes depuis le fichier JSON
+async function getRecipes() {
+  try {
+    // Récupération du fichier JSON avec fetch
+    const res = await fetch("./data/recipes.json");
+    if (res.ok) {
+      // Transformation de la réponse en objet JSON
+      const data = await res.json();
+      // Récupération de la liste des recettes depuis l'objet JSON
+      return data.recipes;
+    }
   } catch (error) {
     console.log(error);
   }
@@ -218,47 +321,6 @@ async function displaySelectContent(data) {
   );
 }
 
-async function displayFilteredRecipesSelect(data) {
-  const ingredientsList = capitalizeFirstLetter(
-    data.flatMap((recipe) =>
-      recipe.ingredients.map((ingredient) => ingredient.ingredient)
-    )
-  );
-  const appliancesList = capitalizeFirstLetter(
-    data.map((recipe) => recipe.appliance)
-  );
-  const ustensilsList = capitalizeFirstLetter(
-    data.flatMap((recipe) => recipe.ustensils)
-  );
-
-  const uniqIngredientsList = [...new Set(ingredientsList)];
-  const uniqappliancesList = [...new Set(appliancesList)];
-  const uniqustensilsList = [...new Set(ustensilsList)];
-
-  // Création de l'élément contenant la liste des ingrédients
-  selectButtonFactory(
-    uniqIngredientsList,
-    uniqappliancesList,
-    uniqustensilsList
-  );
-}
-
-// Fonction de récupération des données de recettes depuis le fichier JSON
-async function getRecipes() {
-  try {
-    // Récupération du fichier JSON avec fetch
-    const res = await fetch("./data/recipes.json");
-    if (res.ok) {
-      // Transformation de la réponse en objet JSON
-      const data = await res.json();
-      // Récupération de la liste des recettes depuis l'objet JSON
-      return data.recipes;
-    }
-  } catch (error) {
-    console.log(error);
-  }
-}
-
 // Fonction d'affichage des données de recettes dans la grille
 function displayRecipes(recipes) {
   // Affichage des recettes
@@ -273,9 +335,9 @@ function displayRecipes(recipes) {
   } else {
     // Si aucun resultat
     const recipeCard = recipeCardFactory();
-    const recipeCardDOM = recipeCard.createNoResultsRecipeCard(); 
-    recipesGrid.appendChild(recipeCardDOM)}
-
+    const recipeCardDOM = recipeCard.createNoResultsRecipeCard();
+    recipesGrid.appendChild(recipeCardDOM);
+  }
 }
 
 // Fonction d'initialisation
@@ -286,7 +348,7 @@ export async function init() {
   displayRecipes(recipes);
   // Affichage du contenu des boutons select
   displaySelectContent(recipes);
-  console.log("close")
+  searchRecipes();
 }
 
 // Appel de la fonction d'initialisation au chargement de la page

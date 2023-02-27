@@ -1,4 +1,4 @@
-import { searchTag } from "../script.js";
+import { searchRecipeTag } from "../script.js";
 import { init }from "../script.js";
 
 export function tagBadgeFactory(element, color, type){
@@ -24,5 +24,5 @@ export function tagBadgeFactory(element, color, type){
   tagBadge.appendChild(tagName)
   tagBadge.appendChild(imgClose)
   tagContainer.appendChild(tagBadge)
-  searchTag()
+  searchRecipeTag()
 }
