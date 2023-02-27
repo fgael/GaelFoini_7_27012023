@@ -14,7 +14,9 @@ searchInput.addEventListener("keyup", () => {
   const query = searchInput.value;
   if (query.length >= 3) {
     searchRecipes();
-  } else {init()}
+  } else {
+    init();
+  }
 });
 
 export async function searchRecipeTag() {
@@ -138,12 +140,7 @@ async function searchRecipes() {
     // Affichage du contenu des boutons select correspondant aux recettes
     searchFilteredSelect(results);
     // Filtrage du resultat boutons select
-    displayFilteredRecipesSelect(results);
-    // Affichage des recettes filtrées avec tag
-    searchRecipeTag(results);
-  } else {
-    // Appel de la fonction d'initialisation si la valeur de l'input est inférieure à 3 caractères
-    init();
+    displayFilteredSelectContent(results);
   }
 }
 
@@ -233,7 +230,7 @@ function getFilteredItems(data, query) {
   return { ingredients, appliances, utensils };
 }
 
-async function displayFilteredRecipesSelect(data) {
+async function displayFilteredSelectContent(data) {
   const ingredientsList = capitalizeFirstLetter(
     data.flatMap((recipe) =>
       recipe.ingredients.map((ingredient) => ingredient.ingredient)
@@ -275,6 +272,7 @@ async function getRecipes() {
 }
 
 async function displaySelectContent(data) {
+  console.log("toto")
   // Exécuter le code avec les ingrédients
   const ingredientsList = capitalizeFirstLetter(
     data.reduce((ingredients, recipe) => {

@@ -1,7 +1,6 @@
 import { tagBadgeFactory } from "../factory/tagBadgeFactory.js";
 
 export function selectButtonFactory(ingredientsList, appliancesList, ustensilsList) {
-
   // Création de l'élément contenant la liste des ingrédients
   const ingredientsContainer = document.getElementById("result-menu-ingredients");
   ingredientsContainer.innerHTML = "";
