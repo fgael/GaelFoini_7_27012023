@@ -21,7 +21,6 @@ searchInput.addEventListener("keyup", () => {
 
 export async function searchRecipeTag() {
   const isTag = document.querySelector(".badge") !== null;
-  console.log("test")
   if (isTag) {
     const tag = document.querySelector(".tag");
     const recipes = await getRecipes();
