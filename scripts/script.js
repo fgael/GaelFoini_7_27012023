@@ -32,29 +32,27 @@ export async function searchRecipeTag() {
 
     // Filtrage des recettes qui correspondent à la requête de recherche
     const results = recipes.filter((recipe) => {
-      const titleMatch = recipe.name
+      const ingredientsMatch =
+        recipe.ingredients.filter((ingredient) =>
+          ingredient.ingredient
+            .toLowerCase()
+            .includes(tag.textContent.toLowerCase())
+        ).length > 0;
+      const ustensilsMatch =
+        recipe.ustensils.filter((ustensil) =>
+          ustensil.toLowerCase().includes(tag.textContent.toLowerCase())
+        ).length > 0;
+      const appliancesMatch = recipe.appliance
         .toLowerCase()
         .includes(tag.textContent.toLowerCase());
-      const ingredientsMatch = recipe.ingredients.filter((ingredient) =>
-        ingredient.ingredient
-          .toLowerCase()
-          .includes(tag.textContent.toLowerCase())
-      );
-      const descriptionMatch = recipe.description
-        .toLowerCase()
-        .includes(tag.textContent.toLowerCase());
-      if (titleMatch || ingredientsMatch.length > 0 || descriptionMatch) {
-        // Ajout des noms d'ingrédients correspondant à la recherche dans l'ensemble Set
+      if (ustensilsMatch || ingredientsMatch || appliancesMatch) {
         recipe.ingredients.forEach((ingredient) =>
           matchingIngredientsSet.add(ingredient.ingredient.toLowerCase())
         );
-
         matchingAppliancesSet.add(recipe.appliance);
-
         recipe.ustensils.forEach((ustensil) =>
           matchingUstensilsSet.add(ustensil.toLowerCase())
         );
-
         return true;
       }
       return false;
@@ -72,24 +70,33 @@ export async function searchRecipeTag() {
         const titleMatch = recipe.name
           .toLowerCase()
           .includes(query.toLowerCase());
-        const ingredientsMatch = recipe.ingredients.filter((ingredient) =>
-          ingredient.ingredient.toLowerCase().includes(query.toLowerCase())
-        );
         const descriptionMatch = recipe.description
           .toLowerCase()
           .includes(query.toLowerCase());
-        if (titleMatch || ingredientsMatch.length > 0 || descriptionMatch) {
-          // Ajout des noms d'ingrédients correspondant à la recherche dans l'ensemble Set
+        const ingredientsMatch =
+          recipe.ingredients.filter((ingredient) =>
+            ingredient.ingredient
+              .toLowerCase()
+              .includes(tag.textContent.toLowerCase())
+          ).length > 0;
+        const ustensilsMatch =
+          recipe.ustensils.filter((ustensil) =>
+            ustensil.toLowerCase().includes(tag.textContent.toLowerCase())
+          ).length > 0;
+        const appliancesMatch = recipe.appliance
+          .toLowerCase()
+          .includes(tag.textContent.toLowerCase());
+        if (
+          (titleMatch || descriptionMatch) &&
+          (ustensilsMatch || ingredientsMatch || appliancesMatch)
+        ) {
           recipe.ingredients.forEach((ingredient) =>
             matchingIngredientsSet.add(ingredient.ingredient.toLowerCase())
           );
-
           matchingAppliancesSet.add(recipe.appliance);
-
           recipe.ustensils.forEach((ustensil) =>
             matchingUstensilsSet.add(ustensil.toLowerCase())
           );
-
           return true;
         }
         return false;
@@ -141,6 +148,8 @@ async function searchRecipes() {
     searchFilteredSelect(results);
     // Filtrage du resultat boutons select
     displayFilteredSelectContent(results);
+
+    searchRecipeTag;
   }
 }
 
@@ -272,7 +281,6 @@ async function getRecipes() {
 }
 
 async function displaySelectContent(data) {
-  console.log("toto")
   // Exécuter le code avec les ingrédients
   const ingredientsList = capitalizeFirstLetter(
     data.reduce((ingredients, recipe) => {
