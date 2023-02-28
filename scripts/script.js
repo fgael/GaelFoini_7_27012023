@@ -149,7 +149,7 @@ async function searchRecipes() {
     // Filtrage du resultat boutons select
     displayFilteredSelectContent(results);
 
-    searchRecipeTag;
+    searchRecipeTag();
   }
 }
 
@@ -355,6 +355,7 @@ export async function init() {
   // Affichage du contenu des boutons select
   displaySelectContent(recipes);
   searchRecipes();
+  searchRecipeTag();
 }
 
 // Appel de la fonction d'initialisation au chargement de la page
