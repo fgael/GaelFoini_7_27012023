@@ -162,40 +162,43 @@ function searchSelect(data) {
 
       // Filtrage resultat tag ingredients
       if (element.id == "input-ingredients") {
-        const { ingredients, appliances, utensils } = getFilteredItems(
+        const { ingredients, appliances, ustensils } = getFilteredItems(
           data,
           query
         );
+        console.log(ingredients)
+        // if (ingredients.length > 0 && appliances.length > 0 && ustensils.length > 0) {}
         selectButtonFactory(
           capitalizeFirstLetter(ingredients),
           capitalizeFirstLetter(appliances),
-          capitalizeFirstLetter(utensils)
+          capitalizeFirstLetter(ustensils)
         );
+
       }
 
       // Filtrage resultat tag appareils
       if (element.id == "input-appareils") {
-        const { ingredients, appliances, utensils } = getFilteredItems(
+        const { ingredients, appliances, ustensils } = getFilteredItems(
           data,
           query
         );
         selectButtonFactory(
           capitalizeFirstLetter(ingredients),
           capitalizeFirstLetter(appliances),
-          capitalizeFirstLetter(utensils)
+          capitalizeFirstLetter(ustensils)
         );
       }
 
       // Filtrage resultat tag ustensiles
       if (element.id == "input-ustensile") {
-        const { ingredients, appliances, utensils } = getFilteredItems(
+        const { ingredients, appliances, ustensils } = getFilteredItems(
           data,
           query
         );
         selectButtonFactory(
           capitalizeFirstLetter(ingredients),
           capitalizeFirstLetter(appliances),
-          capitalizeFirstLetter(utensils)
+          capitalizeFirstLetter(ustensils)
         );
       }
     });
@@ -206,7 +209,7 @@ function getFilteredItems(data, query) {
   const lowercaseQuery = query.toLowerCase();
   const ingredients = [];
   const appliances = [];
-  const utensils = [];
+  const ustensils = [];
 
   data.forEach((recipe) => {
     recipe.ingredients.forEach((ingredient) => {
@@ -231,14 +234,14 @@ function getFilteredItems(data, query) {
       const utensilName = utensil.toLowerCase();
       if (
         utensilName.includes(lowercaseQuery) &&
-        !utensils.includes(utensilName)
+        !ustensils.includes(utensilName)
       ) {
-        utensils.push(utensilName);
+        ustensils.push(utensilName);
       }
     });
   });
 
-  return { ingredients, appliances, utensils };
+  return { ingredients, appliances, ustensils };
 }
 
 async function displayFilteredSelectContent(data) {

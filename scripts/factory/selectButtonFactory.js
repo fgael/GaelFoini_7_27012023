@@ -1,51 +1,38 @@
 import { tagBadgeFactory } from "../factory/tagBadgeFactory.js";
 
+// récupération des éléments conteneurs
+const ingredientsContainer = document.getElementById("result-menu-ingredients");
+const appliancesContainer = document.getElementById("result-menu-appareils");
+const ustensilsContainer = document.getElementById("result-menu-ustensile");
+
 export function selectButtonFactory(ingredientsList, appliancesList, ustensilsList) {
-  // Création de l'élément contenant la liste des ingrédients
-  const ingredientsContainer = document.getElementById("result-menu-ingredients");
-  ingredientsContainer.innerHTML = "";
-  const ingredientsListContainer = document.createElement("div");
-  ingredientsListContainer.classList.add("row");
-  ingredientsList.forEach((ingredient) => {
-    const ingredientCol = document.createElement("div");
-    ingredientCol.classList.add("col-6", "col-md-4");
-    ingredientCol.textContent = ingredient;
-    ingredientCol.addEventListener("click", () => {
-      tagBadgeFactory(ingredient, "text-bg-primary", "ingredient")
-    })
-    ingredientsListContainer.appendChild(ingredientCol);
-  });
-  ingredientsContainer.appendChild(ingredientsListContainer);
 
-  // Création de l'élément contenant la liste des appareils
-  const appliancesContainer = document.getElementById("result-menu-appareils");
-  appliancesContainer.innerHTML = "";
-  const appliancesListContainer = document.createElement("div");
-  appliancesListContainer.classList.add("row");
-  appliancesList.forEach((appliance) => {
-    const applianceCol = document.createElement("div");
-    applianceCol.classList.add("col-6", "col-md-4");
-    applianceCol.textContent = appliance;
-    applianceCol.addEventListener("click", () => {
-      tagBadgeFactory(appliance, "text-bg-success", "appliance")
-    })
-    appliancesListContainer.appendChild(applianceCol);
-  });
-  appliancesContainer.appendChild(appliancesListContainer);
+// création des éléments de liste pour chaque catégorie
+const createListItems = (list, container, type) => {
+container.innerHTML = "";
+const listContainer = document.createElement("div");
+listContainer.classList.add("row");
+list.forEach((item) => {
+const itemCol = document.createElement("div");
+itemCol.classList.add("col-6", "col-md-4");
+itemCol.textContent = item;
+itemCol.addEventListener("click", () => {
+tagBadgeFactory(item, `text-bg-${type}`, type);
+});
+listContainer.appendChild(itemCol);
+});
+container.appendChild(listContainer);
+};
 
-  // Création de l'élément contenant la liste des ustensiles
-  const ustensilsContainer = document.getElementById("result-menu-ustensile");
-  ustensilsContainer.innerHTML = "";
-  const ustensilsListContainer = document.createElement("div");
-  ustensilsListContainer.classList.add("row");
-  ustensilsList.forEach((ustensil) => {
-    const ustensilCol = document.createElement("div");
-    ustensilCol.classList.add("col-6", "col-md-4");
-    ustensilCol.textContent = ustensil;
-    ustensilCol.addEventListener("click", () => {
-      tagBadgeFactory(ustensil, "text-bg-danger", "ustensile")
-    })
-    ustensilsListContainer.appendChild(ustensilCol);
-  });
-  ustensilsContainer.appendChild(ustensilsListContainer);
+// appel à la fonction createListItems pour chaque catégorie
+createListItems(ingredientsList, ingredientsContainer, "primary");
+createListItems(appliancesList, appliancesContainer, "success");
+createListItems(ustensilsList, ustensilsContainer, "danger");
 }
+
+// export function displayNoResult() {
+//   ingredientsContainer.innerHTML = "<p>Aucun ingrédient ne correspond à votre critère…</p>";
+//   appliancesContainer.innerHTML = "<p>Aucun appareil ne correspond à votre critère…</p>";
+//   ustensilsContainer.innerHTML = "<p>Aucun ustensile ne correspond à votre critère…</p>";
+//   console.log("toto")
+// }

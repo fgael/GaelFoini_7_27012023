@@ -89,6 +89,21 @@ label:focus,
 	cursor: pointer;
 }
 
+#result-menu-ingredients p,
+#result-menu-appareils p,
+#result-menu-ustensile p{
+	display: flex;
+	justify-content: center;
+	font-family: var(--title-font);
+	font-weight: var(--text-weight);
+	font-size: var(--result-font-size);
+	line-height: var(--title-line-height);
+	color: white;
+	padding: 5px 10px;
+	opacity: 1;
+	cursor: pointer;
+}
+
 /* Déplacer la position de resultat ingrédients de 55px */
 .z-3 {
 	top: 55px;
@@ -192,6 +207,8 @@ span {
 	font-size: var(--result-font-size);
 	line-height: var(--tag-line-height);
 }
+
+
 
 /* ===== Scrollbar CSS ===== */
   /* Firefox */
