@@ -58,6 +58,8 @@ export async function searchRecipeTag() {
       return false;
     });
     displayRecipes(results);
+    displayFilteredSelectContent(results);
+    searchFilteredSelect(results);
     const query = searchInput.value.toLowerCase();
     if (query.length >= 3) {
       // Initialisation des ensembles pour les ingrédients, appareils et ustensiles correspondant à la recherche
@@ -355,7 +357,6 @@ export async function init() {
   // Affichage du contenu des boutons select
   displaySelectContent(recipes);
   searchRecipes();
-  searchRecipeTag();
 }
 
 // Appel de la fonction d'initialisation au chargement de la page
