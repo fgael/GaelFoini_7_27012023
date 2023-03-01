@@ -3,14 +3,13 @@ import { init }from "../script.js";
 
 export function tagBadgeFactory(element, color, type){
   const closeImgPath = "assets/icons/cross.svg"
-  const tagContainer = document.getElementById("tagContainer")
+  const tagContainer = document.getElementById("tagContainer");
   const tagBadge = document.createElement("span");
   const tagName = document.createElement("p");
   const imgClose = document.createElement("img");
 
   // creation tag
-  tagContainer.innerHTML = "";
-  tagBadge.classList.add("badge", color, "d-flex", "justify-content-center", "align-items-center", "px-3")
+  tagBadge.classList.add("badge", color, "d-flex", "justify-content-center", "align-items-center", "px-3", "mt-3")
   tagName.classList.add("m-0", "tag")
   tagName.setAttribute("id", type)
   tagName.textContent = element;
@@ -18,7 +17,7 @@ export function tagBadgeFactory(element, color, type){
   imgClose.alt = "Supprimer tag"
   imgClose.classList.add("ps-3", "close")
   imgClose.addEventListener("click", () => {
-    tagContainer.innerHTML = "";
+    tagBadge.remove();
     init();
   });  
   tagBadge.appendChild(tagName)

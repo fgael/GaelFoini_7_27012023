@@ -1,16 +1,3 @@
-function toggleResultMenu(result, container, input, arrow, placeholder, placeholder_search) {
-   result.classList.toggle("d-none");
-   container.parentElement.parentElement.classList.toggle("col-md-6");
-   input.placeholder = result.classList.contains("d-none") ? placeholder : placeholder_search;
-   arrow.classList.toggle("rotate-img_event");
- }
-
-function hideResultMenu(result, container, input, placeholder) {
-   result.classList.add("d-none");
-   container.parentElement.parentElement.classList.remove("col-md-6");
-   input.placeholder = placeholder;
- }
-
 const displayTypes = [
    { containerId: 'container-ingredients', inputId: 'input-ingredients', resultId: 'result-menu-ingredients', arrowId: '#container-ingredients img', placeholderText: 'Ingrédients' },
    { containerId: 'container-appareils', inputId: 'input-appareils', resultId: 'result-menu-appareils', arrowId: '#container-appareils img', placeholderText: 'Appareils' },
@@ -35,3 +22,16 @@ displayTypes.forEach(displayType => {
       }
    });
 });
+
+function toggleResultMenu(result, container, input, arrow, placeholder, placeholder_search) {
+   result.classList.toggle("d-none");
+   container.parentElement.parentElement.classList.toggle("col-md-6");
+   input.placeholder = result.classList.contains("d-none") ? placeholder : placeholder_search;
+   arrow.classList.toggle("rotate-img_event");
+ }
+
+function hideResultMenu(result, container, input, placeholder) {
+   result.classList.add("d-none");
+   container.parentElement.parentElement.classList.remove("col-md-6");
+   input.placeholder = placeholder;
+ }

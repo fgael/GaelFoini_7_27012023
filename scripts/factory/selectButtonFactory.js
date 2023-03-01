@@ -8,7 +8,7 @@ const ustensilsContainer = document.getElementById("result-menu-ustensile");
 export function selectButtonFactory(ingredientsList, appliancesList, ustensilsList) {
 
 // création des éléments de liste pour chaque catégorie
-const createListItems = (list, container, type) => {
+const createListItems = (list, container, color) => {
 container.innerHTML = "";
 const listContainer = document.createElement("div");
 listContainer.classList.add("row");
@@ -17,7 +17,7 @@ const itemCol = document.createElement("div");
 itemCol.classList.add("col-6", "col-md-4");
 itemCol.textContent = item;
 itemCol.addEventListener("click", () => {
-tagBadgeFactory(item, `text-bg-${type}`, type);
+tagBadgeFactory(item, `text-bg-${color}`, color);
 });
 listContainer.appendChild(itemCol);
 });
