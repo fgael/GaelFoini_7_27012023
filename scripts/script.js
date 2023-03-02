@@ -10,11 +10,12 @@ const appliancesInput = document.getElementById("input-appareils");
 const ustensilsInput = document.getElementById("input-ustensile");
 const selectInputGroup = [ingredientsInput, appliancesInput, ustensilsInput];
 
-export async function searchRecipeTag() {
+export async function searchRecipeTag(recipes) {
+  console.log("searchRecipeTag")
   const isTag = document.querySelector(".badge") !== null;
   if (isTag) {
+
     const tagList = document.querySelectorAll(".tag");
-    const recipes = await getRecipes();
     const tags = {
       ingredients: [],
       appliances: [],
@@ -51,29 +52,32 @@ export async function searchRecipeTag() {
 
       return ingredientsMatch && appliancesMatch && ustensilsMatch;
     });
-
     // Afficher les résultats
     displayRecipes(results);
     displayFilteredSelectContent(results);
     searchSelect(results);
-    const query = searchInput.value.toLowerCase();
-    if (query.length >= 3) {
-      searchRecipes(results);
-    }
+    searchInput.addEventListener("keyup", () => {
+      const query = searchInput.value;
+      if (query.length >= 3 && isTag ){
+        searchRecipes(results)
+      } else {
+        displayRecipes(results);
+      }
+    })
   }
 }
 
-async function searchRecipes(recipes) {
-  console.log(recipes);
+function searchRecipes(recipes) {
+  console.log("search recipes")
   // Récupération de la valeur de l'input
   const query = searchInput.value;
-  if (query.length >= 3) {
     // Initialisation des ensembles pour les ingrédients, appareils et ustensiles correspondant à la recherche
     const matchingIngredientsSet = new Set();
     const matchingAppliancesSet = new Set();
     const matchingUstensilsSet = new Set();
 
     // Filtrage des recettes qui correspondent à la requête de recherche
+    //---------------------------------//
     const results = recipes.filter((recipe) => {
       const titleMatch = recipe.name
         .toLowerCase()
@@ -97,6 +101,7 @@ async function searchRecipes(recipes) {
       }
       return false;
     });
+    //--------------------------------//
 
     // Affichage des recettes filtrées
     displayRecipes(results);
@@ -104,7 +109,6 @@ async function searchRecipes(recipes) {
     searchSelect(results);
     // Filtrage du resultat boutons select
     displayFilteredSelectContent(results);
-  }
 }
 
 function searchSelect(data) {
@@ -234,6 +238,7 @@ async function displaySelectContent(data) {
 
 // Fonction d'affichage des données de recettes dans la grille
 function displayRecipes(recipes) {
+  console.log("display recipes")
   // Affichage des recettes
   const recipesGrid = document.getElementById("card-grid");
   recipesGrid.innerHTML = "";
@@ -250,8 +255,9 @@ function displayRecipes(recipes) {
     recipesGrid.appendChild(recipeCardDOM);
   }
 }
+
 // Fonction de récupération des données de recettes depuis le fichier JSON
-async function getRecipes() {
+export async function getRecipes() {
   try {
     // Récupération du fichier JSON avec fetch
     const res = await fetch("./data/recipes.json");
@@ -268,23 +274,21 @@ async function getRecipes() {
 
 // Fonction d'initialisation
 export async function init() {
+  console.log("init")
   // Récupération de toutes les recettes
   const recipes = await getRecipes();
   // Affichage de toutes les recettes dans la grille
   displayRecipes(recipes);
   // Affichage du contenu des boutons select
   displaySelectContent(recipes);
-  searchRecipeTag();
   searchSelect(recipes);
   searchInput.addEventListener("keyup", () => {
-    const query = searchInput.value;
+    const query = searchInput.value
     if (query.length >= 3) {
       searchRecipes(recipes);
-    } else {
+    } else if (query.length < 3) {
       displayRecipes(recipes);
-      displaySelectContent(recipes)
-      searchRecipeTag();
-      searchSelect(recipes);
+      displaySelectContent(recipes);
     }
   });
 }

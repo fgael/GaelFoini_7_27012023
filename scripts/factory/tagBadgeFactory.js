@@ -1,7 +1,10 @@
 import { searchRecipeTag } from "../script.js";
 import { init }from "../script.js";
+import { getRecipes }from "../script.js";
 
-export function tagBadgeFactory(element, color, type){
+export async function tagBadgeFactory(element, color, type){
+
+  const recipes = await getRecipes();
   const closeImgPath = "assets/icons/cross.svg"
   const tagContainer = document.getElementById("tagContainer");
   const tagBadge = document.createElement("span");
@@ -18,10 +21,16 @@ export function tagBadgeFactory(element, color, type){
   imgClose.classList.add("ps-3", "close")
   imgClose.addEventListener("click", () => {
     tagBadge.remove();
-    init();
-  });  
+    const tagsLeft = document.querySelectorAll(".tag");
+    if (tagsLeft.length === 0) {
+      init();
+    } else {
+      searchRecipeTag(recipes)
+    }
+  });
+  
   tagBadge.appendChild(tagName)
   tagBadge.appendChild(imgClose)
   tagContainer.appendChild(tagBadge)
-  searchRecipeTag()
+  searchRecipeTag(recipes)
 }
