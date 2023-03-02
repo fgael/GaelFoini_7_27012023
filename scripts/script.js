@@ -120,7 +120,6 @@ function searchSelect(data) {
         type = "ustensils";
       }
       result = getFilteredItems(data, query);
-      console.log(result)
       selectListFactory(
         capitalizeFirstLetter(result[type]),
         capitalizeFirstLetter(result.appliances),
