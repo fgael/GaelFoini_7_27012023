@@ -10,11 +10,11 @@ export function selectListFactory(
   appliancesList,
   ustensilsList
 ) {
-  // if (
-  //   ingredientsList.length > 0 ||
-  //   appliancesList.length > 0 ||
-  //   ustensilsList.length > 0
-  // ) {
+  if (
+    ingredientsList.length > 0 ||
+    appliancesList.length > 0 ||
+    ustensilsList.length > 0
+  ) {
     // création des éléments de liste pour chaque catégorie
     const createSelectList = (list, container, color) => {
       container.innerHTML = "";
@@ -36,15 +36,15 @@ export function selectListFactory(
     createSelectList(ingredientsList, ingredientsContainer, "primary");
     createSelectList(appliancesList, appliancesContainer, "success");
     createSelectList(ustensilsList, ustensilsContainer, "danger");
-  // } else {
-  //   const createNoResultList = () => {
-  //     ingredientsContainer.innerHTML =
-  //       "<p>Aucun ingrédient ne correspond à votre critère…</p>";
-  //     appliancesContainer.innerHTML =
-  //       "<p>Aucun appareil ne correspond à votre critère…</p>";
-  //     ustensilsContainer.innerHTML =
-  //       "<p>Aucun ustensile ne correspond à votre critère…</p>";
-  //   };
-  //   createNoResultList();
-  // }
+  } else {
+    const createNoResultList = () => {
+      ingredientsContainer.innerHTML =
+        "<p>Aucun ingrédient ne correspond à votre critère…</p>";
+      appliancesContainer.innerHTML =
+        "<p>Aucun appareil ne correspond à votre critère…</p>";
+      ustensilsContainer.innerHTML =
+        "<p>Aucun ustensile ne correspond à votre critère…</p>";
+    };
+    createNoResultList();
+  }
 }

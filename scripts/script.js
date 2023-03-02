@@ -282,7 +282,9 @@ export async function init() {
       searchRecipes(recipes);
     } else {
       displayRecipes(recipes);
-      displaySelectContent(recipes);
+      displaySelectContent(recipes)
+      searchRecipeTag();
+      searchSelect(recipes);
     }
   });
 }
