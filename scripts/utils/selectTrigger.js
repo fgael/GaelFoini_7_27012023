@@ -10,7 +10,7 @@ displayTypes.forEach(displayType => {
    const result = document.getElementById(displayType.resultId);
    const arrow = document.querySelector(displayType.arrowId);
    const placeholder = displayType.placeholderText;
-   const placeholder_search = "Rechercher un " + placeholder.slice(0, -1);
+   const placeholder_search = "Rechercher un " + placeholder.toLowerCase().slice(0, -1);
 
    container.addEventListener('click', () => {
       toggleResultMenu(result, container, input, arrow, placeholder, placeholder_search);

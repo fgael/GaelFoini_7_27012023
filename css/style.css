@@ -89,7 +89,7 @@ label:focus,
 	cursor: pointer;
 }
 
-/* #result-menu-ingredients p,
+#result-menu-ingredients p,
 #result-menu-appareils p,
 #result-menu-ustensile p{
 	display: flex;
@@ -101,14 +101,12 @@ label:focus,
 	color: white;
 	padding: 5px 10px;
 	opacity: 1;
-	cursor: pointer;
-} */
+}
 
 /* Déplacer la position de resultat ingrédients de 55px */
 .z-3 {
 	top: 55px;
 }
-
 
 /* Icones des forms */
 .form-floating img,

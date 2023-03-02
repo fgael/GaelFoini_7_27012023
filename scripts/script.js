@@ -1,4 +1,4 @@
-import { selectButtonFactory } from "./factory/selectButtonFactory.js";
+import { selectListFactory } from "./factory/selectListFactory.js";
 import { recipeCardFactory } from "./factory/recipeCardFactory.js";
 import { capitalizeFirstLetter } from "./utils/capitalizeFirstLetter.js";
 
@@ -64,7 +64,7 @@ export async function searchRecipeTag() {
 }
 
 async function searchRecipes(recipes) {
-  console.log(recipes)
+  console.log(recipes);
   // Récupération de la valeur de l'input
   const query = searchInput.value;
   if (query.length >= 3) {
@@ -111,47 +111,21 @@ function searchSelect(data) {
   selectInputGroup.forEach(function (element) {
     element.addEventListener("keyup", () => {
       const query = element.value.toLowerCase();
-
-      // Filtrage resultat tag ingredients
+      let type, result;
       if (element.id == "input-ingredients") {
-        const { ingredients, appliances, ustensils } = getFilteredItems(
-          data,
-          query
-        );
-        console.log(ingredients);
-        // if (ingredients.length > 0 && appliances.length > 0 && ustensils.length > 0) {}
-        selectButtonFactory(
-          capitalizeFirstLetter(ingredients),
-          capitalizeFirstLetter(appliances),
-          capitalizeFirstLetter(ustensils)
-        );
+        type = "ingredients";
+      } else if (element.id == "input-appareils") {
+        type = "appliances";
+      } else if (element.id == "input-ustensile") {
+        type = "ustensils";
       }
-
-      // Filtrage resultat tag appareils
-      if (element.id == "input-appareils") {
-        const { ingredients, appliances, ustensils } = getFilteredItems(
-          data,
-          query
-        );
-        selectButtonFactory(
-          capitalizeFirstLetter(ingredients),
-          capitalizeFirstLetter(appliances),
-          capitalizeFirstLetter(ustensils)
-        );
-      }
-
-      // Filtrage resultat tag ustensiles
-      if (element.id == "input-ustensile") {
-        const { ingredients, appliances, ustensils } = getFilteredItems(
-          data,
-          query
-        );
-        selectButtonFactory(
-          capitalizeFirstLetter(ingredients),
-          capitalizeFirstLetter(appliances),
-          capitalizeFirstLetter(ustensils)
-        );
-      }
+      result = getFilteredItems(data, query);
+      console.log(result)
+      selectListFactory(
+        capitalizeFirstLetter(result[type]),
+        capitalizeFirstLetter(result.appliances),
+        capitalizeFirstLetter(result.ustensils)
+      );
     });
   });
 }
@@ -213,27 +187,7 @@ async function displayFilteredSelectContent(data) {
   const uniqustensilsList = [...new Set(ustensilsList)];
 
   // Création de l'élément contenant la liste des ingrédients
-  selectButtonFactory(
-    uniqIngredientsList,
-    uniqappliancesList,
-    uniqustensilsList
-  );
-}
-
-// Fonction de récupération des données de recettes depuis le fichier JSON
-async function getRecipes() {
-  try {
-    // Récupération du fichier JSON avec fetch
-    const res = await fetch("./data/recipes.json");
-    if (res.ok) {
-      // Transformation de la réponse en objet JSON
-      const data = await res.json();
-      // Récupération de la liste des recettes depuis l'objet JSON
-      return data.recipes;
-    }
-  } catch (error) {
-    console.log(error);
-  }
+  selectListFactory(uniqIngredientsList, uniqappliancesList, uniqustensilsList);
 }
 
 async function displaySelectContent(data) {
@@ -276,11 +230,7 @@ async function displaySelectContent(data) {
   const uniqappliancesList = [...new Set(appliancesList)];
   const uniqustensilsList = [...new Set(ustensilsList)];
   // Création de l'élément contenant la liste des ingrédients
-  selectButtonFactory(
-    uniqIngredientsList,
-    uniqappliancesList,
-    uniqustensilsList
-  );
+  selectListFactory(uniqIngredientsList, uniqappliancesList, uniqustensilsList);
 }
 
 // Fonction d'affichage des données de recettes dans la grille
@@ -301,6 +251,21 @@ function displayRecipes(recipes) {
     recipesGrid.appendChild(recipeCardDOM);
   }
 }
+// Fonction de récupération des données de recettes depuis le fichier JSON
+async function getRecipes() {
+  try {
+    // Récupération du fichier JSON avec fetch
+    const res = await fetch("./data/recipes.json");
+    if (res.ok) {
+      // Transformation de la réponse en objet JSON
+      const data = await res.json();
+      // Récupération de la liste des recettes depuis l'objet JSON
+      return data.recipes;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 // Fonction d'initialisation
 export async function init() {
@@ -316,6 +281,8 @@ export async function init() {
     const query = searchInput.value;
     if (query.length >= 3) {
       searchRecipes(recipes);
+    } else {
+      displayRecipes(recipes);
     }
   });
 }
