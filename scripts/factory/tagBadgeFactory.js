@@ -1,6 +1,8 @@
 import { searchRecipeTag } from "../script.js";
-import { init }from "../script.js";
-import { getRecipes }from "../script.js";
+import { init } from "../script.js";
+import { getRecipes } from "../script.js";
+import { searchInput } from "../script.js";
+
 
 export async function tagBadgeFactory(element, color, type){
 
@@ -20,9 +22,10 @@ export async function tagBadgeFactory(element, color, type){
   imgClose.alt = "Supprimer tag"
   imgClose.classList.add("ps-3", "close")
   imgClose.addEventListener("click", () => {
+    console.log(searchInput.value)
     tagBadge.remove();
     const tagsLeft = document.querySelectorAll(".tag");
-    if (tagsLeft.length === 0) {
+    if (tagsLeft.length === 0 && !searchInput.value) {
       init();
     } else {
       searchRecipeTag(recipes)

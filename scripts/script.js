@@ -3,7 +3,7 @@ import { recipeCardFactory } from "./factory/recipeCardFactory.js";
 import { capitalizeFirstLetter } from "./utils/capitalizeFirstLetter.js";
 
 // Récupération de l'élément input de recherche
-const searchInput = document.getElementById("floatingInput");
+export const searchInput = document.getElementById("floatingInput");
 // Récupération des champs de recherche avancée
 const ingredientsInput = document.getElementById("input-ingredients");
 const appliancesInput = document.getElementById("input-appareils");
