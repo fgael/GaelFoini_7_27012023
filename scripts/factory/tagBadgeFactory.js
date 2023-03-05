@@ -4,9 +4,17 @@ import { displaySelectContent } from "../script.js"
 
 export async function tagBadgeFactory(recipes, element, color, type){
   console.log("tagBadgeFactory")
+  const tagContainer = document.getElementById("tagContainer");
   const searchInput = document.getElementById("floatingInput");
   const closeImgPath = "assets/icons/cross.svg"
-  const tagContainer = document.getElementById("tagContainer");
+
+  // Check if tag with same text content already exists
+  const existingTag = Array.from(tagContainer.children).find(tag => tag.querySelector('.tag').textContent === element);
+  if (existingTag) {
+    // If tag with same text content exists, don't create a new tag and return
+    return;
+  }
+
   const tagBadge = document.createElement("span");
   const tagName = document.createElement("p");
   const imgClose = document.createElement("img");
@@ -20,7 +28,6 @@ export async function tagBadgeFactory(recipes, element, color, type){
   imgClose.alt = "Supprimer tag"
   imgClose.classList.add("ps-3", "close")
   imgClose.addEventListener("click", () => {
-    console.log(searchInput.value)
     tagBadge.remove();
     const tagsLeft = document.querySelectorAll(".tag");
     if (tagsLeft.length === 0 && !searchInput.value) {

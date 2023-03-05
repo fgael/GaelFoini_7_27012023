@@ -33,7 +33,7 @@ export function selectListFactory(
       });
       container.appendChild(listContainer);
     };
-
+    
     // appel à la fonction createListItems pour chaque catégorie
     createSelectList(ingredientsList, ingredientsContainer, "primary");
     createSelectList(appliancesList, appliancesContainer, "success");

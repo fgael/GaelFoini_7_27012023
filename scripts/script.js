@@ -188,14 +188,17 @@ export async function init() {
   searchInput.addEventListener("keyup", () => {
     const query = searchInput.value;
     const isTag = document.querySelector(".badge") !== null;
-    console.log(isTag)
+    console.log(isTag);
     if (query.length >= 3) {
       searchRecipes(recipes);
+      if (isTag) {
+        searchRecipeTag(recipes);
+      }
     } else if (query.length < 3 && !isTag) {
       displayRecipes(recipes);
       displaySelectContent(recipes);
     } else if (query.length < 3 && isTag) {
-      searchRecipeTag(recipes)
+      searchRecipeTag(recipes);
     }
   });
 }
