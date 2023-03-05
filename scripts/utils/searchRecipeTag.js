@@ -16,42 +16,47 @@ export async function searchRecipesTag(recipes) {
     };
 
     // Parcourir les tags et les ranger dans les tableaux correspondants
-    for (let i = 0; i < tagList.length; i++) {
-      const tag = tagList[i];
-      if (tag.id === "primary") {
-        tags.ingredients.push(tag.textContent.toLowerCase().trim());
-      } else if (tag.id === "success") {
-        tags.appliances.push(tag.textContent.toLowerCase().trim());
-      } else if (tag.id === "danger") {
-        tags.ustensils.push(tag.textContent.toLowerCase().trim());
+    tagList.forEach((tag) => {
+      switch (tag.id) {
+        case "primary":
+          tags.ingredients = [
+            ...tags.ingredients,
+            tag.textContent.toLowerCase().trim(),
+          ];
+          break;
+        case "success":
+          tags.appliances = [
+            ...tags.appliances,
+            tag.textContent.toLowerCase().trim(),
+          ];
+          break;
+        case "danger":
+          tags.ustensils = [
+            ...tags.ustensils,
+            tag.textContent.toLowerCase().trim(),
+          ];
+          break;
       }
-    }
+    });
 
-    const results = [];
+    // Filtrer les recettes qui correspondent à tous les tags
+    const results = recipes.filter((recipe) => {
+      const ingredientsMatch = tags.ingredients.every((tag) =>
+        recipe.ingredients.some((ingredient) =>
+          ingredient.ingredient.toLowerCase().includes(tag)
+        )
+      );
+      const appliancesMatch = tags.appliances.every((tag) =>
+        recipe.appliance.toLowerCase().includes(tag)
+      );
+      const ustensilsMatch = tags.ustensils.every((tag) =>
+        recipe.ustensils.some((ustensil) =>
+          ustensil.toLowerCase().includes(tag)
+        )
+      );
 
-    for (let i = 0; i < recipes.length; i++) {
-      const recipe = recipes[i];
-      
-      const ingredientsMatch = tags.ingredients.every((tag) => {
-        return recipe.ingredients.some((ingredient) => {
-          return ingredient.ingredient.toLowerCase().includes(tag);
-        });
-      });
-      
-      const appliancesMatch = tags.appliances.every((tag) => {
-        return recipe.appliance.toLowerCase().includes(tag);
-      });
-      
-      const ustensilsMatch = tags.ustensils.every((tag) => {
-        return recipe.ustensils.some((ustensil) => {
-          return ustensil.toLowerCase().includes(tag);
-        });
-      });
-      
-      if (ingredientsMatch && appliancesMatch && ustensilsMatch) {
-        results.push(recipe);
-      }
-    }
+      return ingredientsMatch && appliancesMatch && ustensilsMatch;
+    });
     // Afficher les résultats
     displayRecipes(results);
     displaySelectTag(results);

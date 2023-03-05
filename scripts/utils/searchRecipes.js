@@ -3,16 +3,14 @@ import { displaySelectTag } from "../displaySelectTag.js";
 import { searchSelectTag } from "./searchSelectTag.js";
 
 export function searchRecipes(recipes) {
-
+  console.log("search recipes");
+  console.time("searchRecipes");
   // Récupération de l'élément input de recherche
   const searchInput = document.getElementById("floatingInput");
   const query = searchInput.value;
 
   // Filtrage des recettes qui correspondent à la requête de recherche
-  let results = [];
-
-  for (let i = 0; i < recipes.length; i++) {
-    const recipe = recipes[i];
+  const results = recipes.filter((recipe) => {
     const titleMatch = recipe.name.toLowerCase().includes(query.toLowerCase());
     const ingredientsMatch = recipe.ingredients.filter((ingredient) =>
       ingredient.ingredient.toLowerCase().includes(query.toLowerCase())
@@ -21,9 +19,10 @@ export function searchRecipes(recipes) {
       .toLowerCase()
       .includes(query.toLowerCase());
     if (titleMatch || ingredientsMatch.length > 0 || descriptionMatch) {
-      results.push(recipe);
+      return true;
     }
-  } 
+    return false;
+  });
 
   // Affichage des recettes filtrées
   displayRecipes(results);
@@ -31,4 +30,5 @@ export function searchRecipes(recipes) {
   displaySelectTag(results);
   // Filtrage tag bouton select
   searchSelectTag(results);
+  console.timeEnd("searchRecipes");
 }
