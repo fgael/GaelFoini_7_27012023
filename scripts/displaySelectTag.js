@@ -2,7 +2,6 @@ import { selectListFactory } from "./factory/selectListFactory.js";
 import { capitalizeFirstLetter } from "./utils/capitalizeFirstLetter.js";
 
 export async function displaySelectTag(recipes) {
-  // Exécuter le code avec les ingrédients
   const ingredientsList = capitalizeFirstLetter(
     recipes.reduce((ingredients, recipe) => {
       recipe.ingredients.forEach((ingredient) => {
