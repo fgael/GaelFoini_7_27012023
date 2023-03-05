@@ -3,8 +3,6 @@ import { displaySelectTag } from "../displaySelectTag.js";
 import { searchSelectTag } from "./searchSelectTag.js";
 
 export function searchRecipes(recipes) {
-  console.log("search recipes");
-  console.time("searchRecipes");
   // Récupération de l'élément input de recherche
   const searchInput = document.getElementById("floatingInput");
   const query = searchInput.value;
@@ -30,5 +28,4 @@ export function searchRecipes(recipes) {
   displaySelectTag(results);
   // Filtrage tag bouton select
   searchSelectTag(results);
-  console.timeEnd("searchRecipes");
 }
