@@ -2,7 +2,6 @@ import { recipeCardFactory } from "./factory/recipeCardFactory.js";
 
 // Fonction d'affichage des données de recettes dans la grille
 export function displayRecipes(recipes) {
-  console.log("display recipes");
   // Affichage des recettes
   const recipesGrid = document.getElementById("card-grid");
   recipesGrid.innerHTML = "";

@@ -18,7 +18,6 @@ export function selectListFactory(
   ) {
     // création des éléments de liste pour chaque catégorie
     const createSelectList = (list, container, color) => {
-      console.log("createSelectList");
       container.innerHTML = "";
       const listContainer = document.createElement("div");
       listContainer.classList.add("row");

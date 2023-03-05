@@ -1,19 +1,16 @@
-import { displayRecipes } from "../displayRecipes.js";
-import { displaySelectTag } from "../displaySelectTag.js";
+import { init } from "../script.js";
 import { searchRecipesTag } from "../utils/searchRecipeTag.js";
 
 export async function tagBadgeFactory(recipes, element, color, type) {
-  console.log("tagBadgeFactory");
   const tagContainer = document.getElementById("tagContainer");
   const searchInput = document.getElementById("floatingInput");
   const closeImgPath = "assets/icons/cross.svg";
 
-  // Check if tag with same text content already exists
+  // Verifie si un tag avec le meme textContent existe
   const existingTag = Array.from(tagContainer.children).find(
     (tag) => tag.querySelector(".tag").textContent === element
   );
   if (existingTag) {
-    // If tag with same text content exists, don't create a new tag and return
     return;
   }
 
@@ -41,8 +38,7 @@ export async function tagBadgeFactory(recipes, element, color, type) {
     tagBadge.remove();
     const tagsLeft = document.querySelectorAll(".tag");
     if (tagsLeft.length === 0 && !searchInput.value) {
-      displayRecipes(recipes);
-      displaySelectTag(recipes);
+      init()
     } else {
       searchRecipesTag(recipes);
     }

@@ -4,14 +4,10 @@ import { searchRecipes } from "./searchRecipes.js";
 import { searchSelectTag } from "./searchSelectTag.js";
 
 export async function searchRecipesTag(recipes) {
-  console.log("searchRecipeTag");
-
   const isTag = document.querySelector(".badge") !== null;
   const searchInput = document.getElementById("floatingInput");
   const query = searchInput.value;
-  
   if (isTag) {
-    console.log(query);
     const tagList = document.querySelectorAll(".tag");
     const tags = {
       ingredients: [],
@@ -31,24 +27,31 @@ export async function searchRecipesTag(recipes) {
       }
     }
 
-    // Filtrer les recettes qui correspondent à tous les tags
-    const results = recipes.filter((recipe) => {
-      const ingredientsMatch = tags.ingredients.every((tag) =>
-        recipe.ingredients.some((ingredient) =>
-          ingredient.ingredient.toLowerCase().includes(tag)
-        )
-      );
-      const appliancesMatch = tags.appliances.every((tag) =>
-        recipe.appliance.toLowerCase().includes(tag)
-      );
-      const ustensilsMatch = tags.ustensils.every((tag) =>
-        recipe.ustensils.some((ustensil) =>
-          ustensil.toLowerCase().includes(tag)
-        )
-      );
+    const results = [];
 
-      return ingredientsMatch && appliancesMatch && ustensilsMatch;
-    });
+    for (let i = 0; i < recipes.length; i++) {
+      const recipe = recipes[i];
+      
+      const ingredientsMatch = tags.ingredients.every((tag) => {
+        return recipe.ingredients.some((ingredient) => {
+          return ingredient.ingredient.toLowerCase().includes(tag);
+        });
+      });
+      
+      const appliancesMatch = tags.appliances.every((tag) => {
+        return recipe.appliance.toLowerCase().includes(tag);
+      });
+      
+      const ustensilsMatch = tags.ustensils.every((tag) => {
+        return recipe.ustensils.some((ustensil) => {
+          return ustensil.toLowerCase().includes(tag);
+        });
+      });
+      
+      if (ingredientsMatch && appliancesMatch && ustensilsMatch) {
+        results.push(recipe);
+      }
+    }
     // Afficher les résultats
     displayRecipes(results);
     displaySelectTag(results);

@@ -11,7 +11,6 @@ const selectInputGroup = [ingredientsInput, appliancesInput, ustensilsInput];
 const searchInput = document.getElementById("floatingInput");
 
 export function searchSelectTag(recipes) {
-  console.log("searchSelect");
   selectInputGroup.forEach(function (element) {
     element.addEventListener("keyup", () => {
       const query = searchInput.value;

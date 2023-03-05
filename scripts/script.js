@@ -10,7 +10,6 @@ const searchInput = document.getElementById("floatingInput");
 
 // Fonction d'initialisation
 export async function init() {
-  console.log("init");
   // Récupération de toutes les recettes
   const recipes = await getRecipes();
   // Affichage de toutes les recettes dans la grille
@@ -21,7 +20,6 @@ export async function init() {
   searchInput.addEventListener("keyup", () => {
     const query = searchInput.value;
     const isTag = document.querySelector(".badge") !== null;
-    console.log(isTag);
     if (query.length >= 3) {
       searchRecipes(recipes);
       if (isTag) {
