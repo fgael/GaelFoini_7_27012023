@@ -18,7 +18,7 @@ export function selectListFactory(
   ) {
     // création des éléments de liste pour chaque catégorie
     const createSelectList = (list, container, color) => {
-      console.log("createSelectList")
+      console.log("createSelectList");
       container.innerHTML = "";
       const listContainer = document.createElement("div");
       listContainer.classList.add("row");
@@ -33,7 +33,7 @@ export function selectListFactory(
       });
       container.appendChild(listContainer);
     };
-    
+
     // appel à la fonction createListItems pour chaque catégorie
     createSelectList(ingredientsList, ingredientsContainer, "primary");
     createSelectList(appliancesList, appliancesContainer, "success");

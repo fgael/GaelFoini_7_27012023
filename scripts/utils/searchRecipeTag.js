@@ -1,15 +1,15 @@
-import {
-  searchRecipes,
-  searchSelect,
-  displaySelectContent,
-} from "../script.js";
-import { displayRecipes } from "../loadRecipes.js";
+import { displayRecipes } from "../displayRecipes.js";
+import { displaySelectTag } from "../displaySelectTag.js";
+import { searchRecipes } from "./searchRecipes.js";
+import { searchSelectTag } from "./searchSelectTag.js";
 
-export async function searchRecipeTag(recipes) {
+export async function searchRecipesTag(recipes) {
   console.log("searchRecipeTag");
+
   const isTag = document.querySelector(".badge") !== null;
   const searchInput = document.getElementById("floatingInput");
   const query = searchInput.value;
+  
   if (isTag) {
     console.log(query);
     const tagList = document.querySelectorAll(".tag");
@@ -51,8 +51,8 @@ export async function searchRecipeTag(recipes) {
     });
     // Afficher les résultats
     displayRecipes(results);
-    displaySelectContent(results);
-    searchSelect(results);
+    displaySelectTag(results);
+    searchSelectTag(results);
     if (query && query.length >= 3) {
       searchRecipes(results);
     }

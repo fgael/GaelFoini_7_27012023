@@ -1,14 +1,9 @@
 export function recipeCardFactory(data) {
   // Fonction pour créer un élément de recette dans le DOM
   function createRecipeCard() {
-    console.log("createRecipeCard")
+    console.log("createRecipeCard");
     const recipe = data;
-    const {
-      name,
-      ingredients,
-      time,
-      description,
-    } = recipe;
+    const { name, ingredients, time, description } = recipe;
     // Création de la carte de recette
     const clockImgPath = "assets/icons/horloge.svg";
     const recipeCard = document.createElement("div");
@@ -25,14 +20,23 @@ export function recipeCardFactory(data) {
     cardBody.classList.add("card-body");
 
     const titleContainer = document.createElement("div");
-    titleContainer.classList.add("d-flex", "justify-content-between", "align-items-center");
+    titleContainer.classList.add(
+      "d-flex",
+      "justify-content-between",
+      "align-items-center"
+    );
 
     const title = document.createElement("h5");
     title.classList.add("card-title", "mb-0", "col-lg-7", "col-md-8");
     title.textContent = name;
 
     const clockContainer = document.createElement("div");
-    clockContainer.classList.add("card-title", "mb-0", "d-flex", "align-items-center");
+    clockContainer.classList.add(
+      "card-title",
+      "mb-0",
+      "d-flex",
+      "align-items-center"
+    );
 
     const clockImg = document.createElement("img");
     clockImg.src = clockImgPath;
@@ -43,7 +47,11 @@ export function recipeCardFactory(data) {
     timeText.textContent = `${time} min`;
 
     const ingredientsContainer = document.createElement("div");
-    ingredientsContainer.classList.add("d-flex", "justify-content-between", "mt-3");
+    ingredientsContainer.classList.add(
+      "d-flex",
+      "justify-content-between",
+      "mt-3"
+    );
 
     const ingredientsList = document.createElement("div");
     ingredientsList.classList.add("text-start", "ingredients");
@@ -87,16 +95,17 @@ export function recipeCardFactory(data) {
     return recipeCard;
   }
 
-  function createNoResultsRecipeCard () {
+  function createNoResultsRecipeCard() {
     const noFoundCardContainer = document.createElement("div");
     const noFoundCard = document.createElement("div");
-    noFoundCardContainer.classList.add( "d-flex", "justify-content-center")
-    noFoundCard.classList.add("no-result")
+    noFoundCardContainer.classList.add("d-flex", "justify-content-center");
+    noFoundCard.classList.add("no-result");
     const noFoundText = document.createElement("p");
-    noFoundText.classList.add("m-0", "text-center")
-    noFoundText.textContent = "Aucune recette ne correspond à votre critère… vous pouvez chercher « tarte aux pommes », « poisson », etc.";
-    noFoundCardContainer.appendChild(noFoundCard)
-    noFoundCard.appendChild(noFoundText)
+    noFoundText.classList.add("m-0", "text-center");
+    noFoundText.textContent =
+      "Aucune recette ne correspond à votre critère… vous pouvez chercher « tarte aux pommes », « poisson », etc.";
+    noFoundCardContainer.appendChild(noFoundCard);
+    noFoundCard.appendChild(noFoundText);
 
     return noFoundCardContainer;
   }
