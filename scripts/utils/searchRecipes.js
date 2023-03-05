@@ -14,16 +14,20 @@ export function searchRecipes(recipes) {
   for (let i = 0; i < recipes.length; i++) {
     const recipe = recipes[i];
     const titleMatch = recipe.name.toLowerCase().includes(query.toLowerCase());
-    const ingredientsMatch = recipe.ingredients.filter((ingredient) =>
-      ingredient.ingredient.toLowerCase().includes(query.toLowerCase())
-    );
+    let ingredientsMatch = [];
+    for (let j = 0; j < recipe.ingredients.length; j++) {
+      const ingredient = recipe.ingredients[j];
+      if (ingredient.ingredient.toLowerCase().includes(query.toLowerCase())) {
+        ingredientsMatch.push(ingredient);
+      }
+    }
     const descriptionMatch = recipe.description
       .toLowerCase()
       .includes(query.toLowerCase());
     if (titleMatch || ingredientsMatch.length > 0 || descriptionMatch) {
       results.push(recipe);
     }
-  } 
+  }
 
   // Affichage des recettes filtrées
   displayRecipes(results);
