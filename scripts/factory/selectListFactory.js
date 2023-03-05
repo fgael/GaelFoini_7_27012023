@@ -6,6 +6,7 @@ const appliancesContainer = document.getElementById("result-menu-appareils");
 const ustensilsContainer = document.getElementById("result-menu-ustensile");
 
 export function selectListFactory(
+  recipes,
   ingredientsList,
   appliancesList,
   ustensilsList
@@ -17,6 +18,7 @@ export function selectListFactory(
   ) {
     // création des éléments de liste pour chaque catégorie
     const createSelectList = (list, container, color) => {
+      console.log("createSelectList")
       container.innerHTML = "";
       const listContainer = document.createElement("div");
       listContainer.classList.add("row");
@@ -25,7 +27,7 @@ export function selectListFactory(
         itemCol.classList.add("col-6", "col-md-4");
         itemCol.textContent = item;
         itemCol.addEventListener("click", () => {
-          tagBadgeFactory(item, `text-bg-${color}`, color);
+          tagBadgeFactory(recipes, item, `text-bg-${color}`, color);
         });
         listContainer.appendChild(itemCol);
       });

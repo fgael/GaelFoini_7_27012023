@@ -1,6 +1,7 @@
 export function recipeCardFactory(data) {
   // Fonction pour créer un élément de recette dans le DOM
   function createRecipeCard() {
+    console.log("createRecipeCard")
     const recipe = data;
     const {
       name,

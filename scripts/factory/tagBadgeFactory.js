@@ -1,12 +1,10 @@
-import { searchRecipeTag } from "../script.js";
-import { init } from "../script.js";
-import { getRecipes } from "../script.js";
-import { searchInput } from "../script.js";
+import { searchRecipeTag } from "../utils/searchRecipeTag.js";
+import { displayRecipes } from "../loadRecipes.js";
+import { displaySelectContent } from "../script.js"
 
-
-export async function tagBadgeFactory(element, color, type){
-
-  const recipes = await getRecipes();
+export async function tagBadgeFactory(recipes, element, color, type){
+  console.log("tagBadgeFactory")
+  const searchInput = document.getElementById("floatingInput");
   const closeImgPath = "assets/icons/cross.svg"
   const tagContainer = document.getElementById("tagContainer");
   const tagBadge = document.createElement("span");
@@ -26,12 +24,12 @@ export async function tagBadgeFactory(element, color, type){
     tagBadge.remove();
     const tagsLeft = document.querySelectorAll(".tag");
     if (tagsLeft.length === 0 && !searchInput.value) {
-      init();
+      displayRecipes(recipes);
+      displaySelectContent(recipes)
     } else {
       searchRecipeTag(recipes)
     }
   });
-  
   tagBadge.appendChild(tagName)
   tagBadge.appendChild(imgClose)
   tagContainer.appendChild(tagBadge)
