@@ -1,5 +1,6 @@
 import { selectListFactory } from "../factory/selectListFactory.js";
 import { capitalizeFirstLetter } from "./capitalizeFirstLetter.js";
+import { displaySelectTag } from "../displaySelectTag.js";
 import { init } from "../script.js";
 
 // Récupération des champs de recherche avancée
@@ -61,7 +62,7 @@ export function searchSelectTag(recipes) {
       } else if (!selectQuery && query.length < 3 && !isTag) {
         init();
       } else {
-        displaySelectContent(recipes);
+        displaySelectTag(recipes);
       }
     });
   });
