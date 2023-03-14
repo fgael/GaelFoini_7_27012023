@@ -56,10 +56,13 @@ export async function searchRecipesTag(recipes) {
     displayRecipes(results);
     displaySelectTag(results);
     searchSelectTag(results);
+    // Si tag et query >= 3
     if (query && query.length >= 3) {
       searchRecipes(results);
     }
-  } else if (query && query.length >= 3) {
+  } 
+    // Si pas de tag mais query >= 3
+    else if (query && query.length >= 3) {
     searchRecipes(recipes);
   }
 }
